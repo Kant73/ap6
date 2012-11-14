@@ -51,16 +51,15 @@ string LecteurSymbole::motSuivant() {
 			 isdigit(lc.getCarCour()) || 
 			 lc.getCarCour() == '_');
 
-	} else if (lc.getCarCour() == '"')
+	} else if (lc.getCarCour() == '"') {
 		// c'est le début d'une chaîne de caractères
-    {
-        s=s+lc.getCarCour();
-        do {
-            lc.suivant();
-            s=s+lc.getCarCour();
-		} while (lc.getCarCour()!='"');
-        lc.suivant();
-    } else if (lc.getCarCour() != EOF) {
+		s=s+lc.getCarCour();
+		do {
+			lc.suivant();
+			s=s+lc.getCarCour();
+		} while (lc.getCarCour() != '"');
+		lc.suivant();
+	} else if (lc.getCarCour() != EOF) {
 		// c'est un caractere special
 		s = lc.getCarCour();
 		lc.suivant();
