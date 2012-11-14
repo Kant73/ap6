@@ -16,13 +16,15 @@ private:
     LecteurSymbole ls;  // le lecteur de symboles utilisé pour lyser le fichier		
 
     // implémentation de la grammaire
-    void programme();   //   <programme> ::= debut <seqInst> fin <EOF>
-    void seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
-    void inst();	    //        <inst> ::= <affectation>
-    void affectation();	// <affectation> ::= <variable> = <expression>
-    void expression();	//  <expression> ::= <facteur> { <opBinaire> <facteur> }
-    void facteur();     //     <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
-    void opBinaire();   //  <opBinaire>  ::= + | - | *  | /
+    void programme();   //<programme> ::= debut <seqInst> fin <EOF>
+    void seqInst();	    //<seq_ins> ::= <inst> ; { <inst> ; }
+    void inst();	    //<inst> ::= <affectation>
+    void affectation();	//<affectation> ::= <variable> = <expression>
+    void expression();  //<expression> ::= <terme> { <opAdd> <terme> }
+    void terme();       //<terme> ::= <facteur> { <opMult> facteur> }
+    void facteur();     //<facteur> ::= <entier> | <variable> | - <facteur> | ( <expression> )
+    void opAdd();       //<opAdd> ::= + | -
+    void opMult();      //<opMult> ::= * | /
 
     // outils pour se simplifier l'analyse syntaxique
     void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien

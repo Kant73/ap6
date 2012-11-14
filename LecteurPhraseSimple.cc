@@ -54,14 +54,25 @@ void LecteurPhraseSimple::affectation() {
 
 ////////////////////////////////////////////////////////////////////////////////
 void LecteurPhraseSimple::expression() {
-// <expression> ::= <facteur> { <opBinaire> <facteur> }
+//<expression> ::= <terme> { <opAdd> <terme> }
 
-	facteur();
-	while (ls.getSymCour()=="+" || ls.getSymCour()=="-" || 
-		   ls.getSymCour()=="*" || ls.getSymCour()=="/") {
-		opBinaire();
-		facteur();
+	terme();
+	while (ls.getSymCour()=="+" || ls.getSymCour()=="-") {
+		opAdd();
+		terme();
 	}
+}
+
+
+void LecteurPhraseSimple::terme()
+//<terme> ::= <facteur> { <opMult> facteur> }
+{
+    facteur();
+    while (ls.getSymCour() == "*" || ls.getSymCour()=="/")
+    {
+        opMult();
+        facteur();
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -81,16 +92,26 @@ void LecteurPhraseSimple::facteur() {
 		erreur("<facteur>");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void LecteurPhraseSimple::opBinaire()
-// <opBinaire> ::= + | - | *  | /
+
+void LecteurPhraseSimple::opAdd()
+//<opAdd> ::= + | -
 {
-	if (ls.getSymCour()=="+" || ls.getSymCour()=="-" || 
-		ls.getSymCour()=="*" || ls.getSymCour()=="/")
-		ls.suivant();
-	else
-		erreur("<opBinaire>");
+    if (ls.getSymCour()=="+" || ls.getSymCour()=="-")
+        ls.suivant();
+    else
+        erreur("<opAdd>");
 }
+
+
+void LecteurPhraseSimple::opMult()
+//<opMult> ::= * | /
+{
+    if (ls.getSymCour()=="*" || ls.getSymCour()=="/")
+        ls.suivant();
+    else
+        erreur("<opMult>");
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 void LecteurPhraseSimple::testerSymCour(string ch) {
