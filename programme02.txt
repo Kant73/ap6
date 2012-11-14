@@ -1,0 +1,5 @@
+# commentaire
+debut
+  i="salut";
+fin
+

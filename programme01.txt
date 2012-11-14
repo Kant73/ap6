@@ -1,0 +1,6 @@
+# commentaire
+debut
+  i = 1;
+  i = i+3;
+fin
+

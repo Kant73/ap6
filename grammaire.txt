@@ -1,0 +1,13 @@
+  <programme> ::= { <commentaire> } debut { <commentaire> } <seqInst> { <commentaire> } fin { <commentaire> } <FINDEFICHIER>
+    <seqInst> ::= <inst> ; { <inst> ; }
+       <inst> ::= <affectation>
+<affectation> ::= <variable> = <expression>
+ <expression> ::= <facteur> { <opBinaire> <facteur> }
+    <facteur> ::= <entier> | <variable> | - <facteur> | ( <expression> ) | <chaine>
+  <opBinaire> ::= + | - | * | /
+     <entier> ::= <chiffre> { <chiffre> }
+   <variable> ::= <lettre> { <lettre> | <chiffre> | _ }
+     <chaine> ::= " { <caractère> } "
+<commentaire> ::= # { <caractère> } <FinDeLigne>
+    <chiffre> ::= 0 | 1 | 2 | ... | 9
+     <lettre> ::= A | a | B | b |... Z | z
