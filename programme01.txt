@@ -1,6 +1,6 @@
 # commentaire
 debut
-  i = 1;
-  i = i+3;
+  i = 5*3+7;
+  j = 7+3*5;
 fin
 

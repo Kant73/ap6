@@ -23,6 +23,9 @@ private:
 	void expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
 	void facteur();     //     <facteur> ::= <entier> | <variable> | - <facteur> | ( <expression> )
 	void opBinaire();   //  <opBinaire>  ::= + | - | *  | /
+	void terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
+	void opAdd();       //       <opAdd> ::= + | -
+	void opMult();      //      <opMult> ::= * | /
 
 	// outils pour se simplifier l'analyse syntaxique
 	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
