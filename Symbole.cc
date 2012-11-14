@@ -5,7 +5,7 @@ using namespace std;
 
 #include "Symbole.h"
 
-////////////////////////////////////////////////////////////////////////////////
+
 Symbole::Symbole(string s) {
 	this->chaine=s;
 	// attention : l'ordre des tests ci-dessous n'est pas innocent !
@@ -17,7 +17,7 @@ Symbole::Symbole(string s) {
 	else                    this->categorie=INDEFINI;
 }
 
-////////////////////////////////////////////////////////////////////////////////
+
 bool Symbole::operator == (string ch) {
 	return  this->chaine==ch                                   ||
 	       (this->categorie==VARIABLE     && ch=="<VARIABLE>") ||
@@ -27,7 +27,7 @@ bool Symbole::operator == (string ch) {
 	       (this->categorie==CHAINE && ch=="<CHAINE>");
 }
 
-////////////////////////////////////////////////////////////////////////////////
+
 bool Symbole::isMotCle(string s) {
 	static vector <string> motsCles; // vecteur pour stocker les mots clés du langage
 	// si on n'a pas encore chargé les mots clés dans le vecteur, on le fait !
@@ -51,7 +51,7 @@ bool Symbole::isMotCle(string s) {
 	return (i<motsCles.size() && motsCles[i]==s);
 }
 
-////////////////////////////////////////////////////////////////////////////////
+
 // Attention : cette fonction (operator << ) n'est pas membre de la classe Symbole
 ostream & operator <<(ostream & cout, Symbole symb) {
 	cout << "Symbole de type ";
