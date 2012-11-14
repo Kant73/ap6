@@ -38,14 +38,14 @@ string LecteurSymbole::motSuivant() {
 	if (isdigit(lc.getCarCour())) {
 		// c'est le début d'un entier
 		do {
-			s = s + lc.getCarCour();
+			s += lc.getCarCour();
 			lc.suivant();
 		} while (isdigit(lc.getCarCour()));
 
 	} else if (isalpha(lc.getCarCour())) {
 		// c'est le début d'un mot
 		do {
-			s = s + lc.getCarCour();
+			s += lc.getCarCour();
 			lc.suivant();
 		} while (isalpha(lc.getCarCour())  || 
 			 isdigit(lc.getCarCour()) || 
@@ -53,16 +53,21 @@ string LecteurSymbole::motSuivant() {
 
 	} else if (lc.getCarCour() == '"') {
 		// c'est le début d'une chaîne de caractères
-		s=s+lc.getCarCour();
+		s += lc.getCarCour();
 		do {
 			lc.suivant();
-			s=s+lc.getCarCour();
+			s += lc.getCarCour();
 		} while (lc.getCarCour() != '"');
 		lc.suivant();
 	} else if (lc.getCarCour() != EOF) {
 		// c'est un caractere special
 		s = lc.getCarCour();
 		lc.suivant();
+
+		if ((s == "=" || s == "<" || s == ">" || s == "!") && lc.getCarCour() == '=') {
+			s += lc.getCarCour();
+			lc.suivant();
+		}
 	}
 	return s;
 }
