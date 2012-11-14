@@ -1,0 +1,5 @@
+*.o
+TestLecteurPhraseAvecTable
+TestLecteurPhraseSimple
+TestLecteurSymbole
+TestLecteurPhraseAvecArbre

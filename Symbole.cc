@@ -13,6 +13,7 @@ Symbole::Symbole(string s) {
 	else if (isdigit(s[0])) this->categorie=ENTIER;
         else if (isMotCle(s))   this->categorie=MOTCLE;
 	else if (isalpha(s[0])) this->categorie=VARIABLE;
+	else if (s[0]=='"') this->categorie=CHAINE;
 	else                    this->categorie=INDEFINI;
 }
 
@@ -22,7 +23,8 @@ bool Symbole::operator == (string ch) {
 	       (this->categorie==VARIABLE     && ch=="<VARIABLE>") ||
 	       (this->categorie==ENTIER       && ch=="<ENTIER>")   ||
 	       (this->categorie==INDEFINI     && ch=="<INDEFINI>") ||
-	       (this->categorie==FINDEFICHIER && ch=="<FINDEFICHIER>");
+	       (this->categorie==FINDEFICHIER && ch=="<FINDEFICHIER>") ||
+	       (this->categorie==CHAINE && ch=="<CHAINE>");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -58,6 +60,7 @@ ostream & operator <<(ostream & cout, Symbole symb) {
 	else if (symb.categorie==Symbole::ENTIER)       cout << "<ENTIER>      ";
 	else if (symb.categorie==Symbole::INDEFINI)     cout << "<INDEFINI>    ";
 	else if (symb.categorie==Symbole::FINDEFICHIER) cout << "<FINDEFICHIER>";
+	else if (symb.categorie==Symbole::CHAINE)		cout << "<CHAINE>      ";
 	cout << " : \"" << symb.chaine << "\"" ;
 	return cout;
 }
