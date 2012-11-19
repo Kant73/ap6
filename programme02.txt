@@ -1,6 +1,6 @@
 # commentaire
 debut
   i="salut";
-  i=="lol";
+  i= (2 == 2);
 fin
 

@@ -21,11 +21,16 @@ private:
 	void inst();	    //        <inst> ::= <affectation>
 	void affectation(); // <affectation> ::= <variable> = <expression>
 	void expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
-	void facteur();     //     <facteur> ::= <entier> | <variable> | - <facteur> | ( <expression> )
-	void opBinaire();   //  <opBinaire>  ::= + | - | *  | /
+	void facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
+	void opBinaire();   //   <opBinaire> ::= <opAdd> | <opMult>
 	void terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
 	void opAdd();       //       <opAdd> ::= + | -
 	void opMult();      //      <opMult> ::= * | /
+	void expBool();     //     <expBool> ::= <relation> { <opBool> <relation> }
+	void opBool();      //      <opBool> ::= et | ou
+	void relation();    //    <relation> ::= <expression> { <opRel> <expression> }
+	void opRel();	    //       <opRel> ::= == | != | < | <= | > | >= 
+	void opUnaire();    //    <opUnaire> ::= - | non
 
 	// outils pour se simplifier l'analyse syntaxique
 	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien

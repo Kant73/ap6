@@ -4,6 +4,11 @@ using namespace std;
 
 #include "LecteurPhraseSimple.h"
 
+// Permet de tester le type d'un opérateur
+#define IS_OPBOOL(s) ((s) == "et" || (s) == "ou")
+#define IS_OPREL(s)  ((s) == "==" || (s) == "!=" || (s) == "<" || (s) == ">" || (s) == "<=" || (s) == ">=")
+#define IS_OPUNAIRE(s) ((s) == "-" || (s) == "non")
+
 
 LecteurPhraseSimple::LecteurPhraseSimple(string nomFich) :
 	ls(nomFich)
@@ -66,7 +71,7 @@ void LecteurPhraseSimple::expression()
 }
 
 
-//<terme> ::= <facteur> { <opMult> facteur> }
+//<terme> ::= <facteur> { <opMult> <facteur> }
 void LecteurPhraseSimple::terme()
 {
 	facteur();
@@ -77,17 +82,17 @@ void LecteurPhraseSimple::terme()
 }
 
 
-// <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
+// <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
 void LecteurPhraseSimple::facteur()
 {
-	if (ls.getSymCour() == "<VARIABLE>" || ls.getSymCour() == "<ENTIER>")
+	if (ls.getSymCour() == "<VARIABLE>" || ls.getSymCour() == "<ENTIER>" || ls.getSymCour() == "<CHAINE>")
 		ls.suivant();
-	else if (ls.getSymCour() == "-") {
+	else if (IS_OPUNAIRE(ls.getSymCour())) {
 		ls.suivant();
-		facteur();
+		expBool();
 	} else if (ls.getSymCour() == "(") {
 		ls.suivant();
-		expression();
+		expBool();
 		sauterSymCour(")");
 	} else
 		erreur("<facteur>");
@@ -112,6 +117,60 @@ void LecteurPhraseSimple::opMult()
 	else
 		erreur("<opMult>");
 }
+
+
+//     <expBool> ::= <relation> { <opBool> <relation> }
+void LecteurPhraseSimple::expBool()
+{
+	relation();
+	while (IS_OPBOOL(ls.getSymCour())) {
+		opBool();
+		relation();
+	}
+}
+
+
+//      <opBool> ::= et | ou
+void LecteurPhraseSimple::opBool()
+{
+	if (IS_OPBOOL(ls.getSymCour()))
+		ls.suivant();
+	else
+		erreur("<opBool>");
+}
+
+
+//    <relation> ::= <expression> { <opRel> <expression> }
+void LecteurPhraseSimple::relation()
+{
+	expression();
+	while (IS_OPREL(ls.getSymCour())) {
+		opRel();
+		expression();
+	}
+}
+
+
+//       <opRel> ::= == | != | < | <= | > | >= 
+void LecteurPhraseSimple::opRel()
+{
+	if (IS_OPREL(ls.getSymCour()))
+		ls.suivant();
+	else
+		erreur("<opRel>");
+}
+
+
+//    <opUnaire> ::= - | non
+void LecteurPhraseSimple::opUnaire()
+{
+	if (IS_OPUNAIRE(ls.getSymCour()))
+		ls.suivant();
+	else
+		erreur("<opUnaire>");
+}
+
+
 
 
 void LecteurPhraseSimple::testerSymCour(string ch) {
