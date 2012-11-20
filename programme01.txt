@@ -1,6 +1,13 @@
 # commentaire
 debut
-  i = 5*3+7;
+  i = 5+3;
+  si ( i == 8 )
+    r = 1;
+  sinonsi ( i == 7 )
+    r = 2;
+  sinon
+    r = 3;
+  finsi;
   j = 7+3*5;
 fin
 
