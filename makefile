@@ -4,19 +4,19 @@ all: TestLecteurSymbole TestLecteurPhraseSimple TestLecteurPhraseAvecTable TestL
 ######################################################################################################
 # etape 1 - lecteur de symboles 
 ######################################################################################################
-ObjTestLecteurSymbole = LecteurCaractere.o Symbole.o LecteurSymbole.o TestLecteurSymbole.o
+ObjTestLecteurSymbole = src/LecteurCaractere.o src/Symbole.o src/LecteurSymbole.o src/TestLecteurSymbole.o
 
-LecteurCaractere.o: LecteurCaractere.cc LecteurCaractere.h
-	$(GCC) -c LecteurCaractere.cc
+src/LecteurCaractere.o: src/LecteurCaractere.cc src/LecteurCaractere.h
+	$(GCC) -c src/LecteurCaractere.cc -o $@
 
-Symbole.o: Symbole.cc Symbole.h
-	$(GCC) -c Symbole.cc
+src/Symbole.o: src/Symbole.cc src/Symbole.h
+	$(GCC) -c src/Symbole.cc -o $@
 
-LecteurSymbole.o: LecteurSymbole.cc LecteurSymbole.h Symbole.h LecteurCaractere.h
-	$(GCC) -c LecteurSymbole.cc
+src/LecteurSymbole.o: src/LecteurSymbole.cc src/LecteurSymbole.h src/Symbole.h src/LecteurCaractere.h
+	$(GCC) -c src/LecteurSymbole.cc -o $@
 
-TestLecteurSymbole.o: TestLecteurSymbole.cc LecteurSymbole.h
-	$(GCC) -c TestLecteurSymbole.cc
+src/TestLecteurSymbole.o: src/TestLecteurSymbole.cc src/LecteurSymbole.h
+	$(GCC) -c src/TestLecteurSymbole.cc -o $@
 
 TestLecteurSymbole: $(ObjTestLecteurSymbole)
 	$(GCC) -o TestLecteurSymbole $(ObjTestLecteurSymbole)
@@ -24,48 +24,47 @@ TestLecteurSymbole: $(ObjTestLecteurSymbole)
 ######################################################################################################
 # etape 2 - lecteur de phrase simple 
 ######################################################################################################
-ObjTestLecteurPhraseSimple = LecteurCaractere.o Symbole.o LecteurSymbole.o LecteurPhraseSimple.o TestLecteurPhraseSimple.o
+ObjTestLecteurPhraseSimple = src/LecteurCaractere.o src/Symbole.o src/LecteurSymbole.o src/LecteurPhraseSimple.o src/TestLecteurPhraseSimple.o
 
-LecteurPhraseSimple.o: LecteurPhraseSimple.cc LecteurPhraseSimple.h Symbole.h LecteurSymbole.h
-	$(GCC) -c LecteurPhraseSimple.cc
-	
-TestLecteurPhraseSimple.o: TestLecteurPhraseSimple.cc LecteurPhraseSimple.h
-	$(GCC) -c TestLecteurPhraseSimple.cc
-	
+src/LecteurPhraseSimple.o: src/LecteurPhraseSimple.cc src/LecteurPhraseSimple.h src/Symbole.h src/LecteurSymbole.h
+	$(GCC) -c src/LecteurPhraseSimple.cc -o $@
+
+src/TestLecteurPhraseSimple.o: src/TestLecteurPhraseSimple.cc src/LecteurPhraseSimple.h
+	$(GCC) -c src/TestLecteurPhraseSimple.cc -o $@
+
 TestLecteurPhraseSimple: $(ObjTestLecteurPhraseSimple)
 	$(GCC) -o TestLecteurPhraseSimple $(ObjTestLecteurPhraseSimple)
-	
+
 ######################################################################################################
 # etape 3 - lecteur de phrase avec table des symboles 
 ######################################################################################################
-ObjTestLecteurPhraseAvecTable = LecteurCaractere.o Symbole.o LecteurSymbole.o SymboleValue.o TableSymboles.o LecteurPhraseAvecTable.o TestLecteurPhraseAvecTable.o
+ObjTestLecteurPhraseAvecTable = src/LecteurCaractere.o src/Symbole.o src/LecteurSymbole.o src/SymboleValue.o src/TableSymboles.o src/LecteurPhraseAvecTable.o src/TestLecteurPhraseAvecTable.o
 
-SymboleValue.o: SymboleValue.cc SymboleValue.h Symbole.h
-	$(GCC) -c SymboleValue.cc
+src/SymboleValue.o: src/SymboleValue.cc src/SymboleValue.h src/Symbole.h
+	$(GCC) -c src/SymboleValue.cc -o $@
 
-TableSymboles.o: TableSymboles.cc TableSymboles.h SymboleValue.h 
-	$(GCC) -c TableSymboles.cc
+src/TableSymboles.o: src/TableSymboles.cc src/TableSymboles.h src/SymboleValue.h 
+	$(GCC) -c src/TableSymboles.cc -o $@
 
-LecteurPhraseAvecTable.o: LecteurPhraseAvecTable.cc LecteurPhraseAvecTable.h LecteurSymbole.h TableSymboles.h
-	$(GCC) -c LecteurPhraseAvecTable.cc
+src/LecteurPhraseAvecTable.o: src/LecteurPhraseAvecTable.cc src/LecteurPhraseAvecTable.h src/LecteurSymbole.h src/TableSymboles.h
+	$(GCC) -c src/LecteurPhraseAvecTable.cc -o $@
 
 TestLecteurPhraseAvecTable: $(ObjTestLecteurPhraseAvecTable)
 	$(GCC) -o TestLecteurPhraseAvecTable $(ObjTestLecteurPhraseAvecTable)
-	
+
 ######################################################################################################
 # etape 4 - lecteur de phrase avec table des symboles et arbre
 ######################################################################################################
-ObjTestLecteurPhraseAvecArbre = LecteurCaractere.o Symbole.o LecteurSymbole.o SymboleValue.o TableSymboles.o Arbre.o LecteurPhraseAvecArbre.o TestLecteurPhraseAvecArbre.o
+ObjTestLecteurPhraseAvecArbre = src/LecteurCaractere.o src/Symbole.o src/LecteurSymbole.o src/SymboleValue.o src/TableSymboles.o src/Arbre.o src/LecteurPhraseAvecArbre.o src/TestLecteurPhraseAvecArbre.o
 
-Arbre.o: Arbre.h Arbre.cc Symbole.h SymboleValue.h
-	$(GCC) -c Arbre.cc
+src/Arbre.o: src/Arbre.h src/Arbre.cc src/Symbole.h src/SymboleValue.h
+	$(GCC) -c src/Arbre.cc -o $@
 
-LecteurPhraseAvecArbre.o: LecteurPhraseAvecArbre.cc LecteurPhraseAvecArbre.h Symbole.h LecteurSymbole.h TableSymboles.h Arbre.h
-	$(GCC) -c LecteurPhraseAvecArbre.cc
+src/LecteurPhraseAvecArbre.o: src/LecteurPhraseAvecArbre.cc src/LecteurPhraseAvecArbre.h src/Symbole.h src/LecteurSymbole.h src/TableSymboles.h src/Arbre.h
+	$(GCC) -c src/LecteurPhraseAvecArbre.cc -o $@
 
-TestLecteurPhraseAvecArbre.o: TestLecteurPhraseAvecArbre.cc LecteurPhraseAvecArbre.h
-	$(GCC) -c TestLecteurPhraseAvecArbre.cc
-	
+src/TestLecteurPhraseAvecArbre.o: src/TestLecteurPhraseAvecArbre.cc src/LecteurPhraseAvecArbre.h
+	$(GCC) -c src/TestLecteurPhraseAvecArbre.cc -o $@
+
 TestLecteurPhraseAvecArbre: $(ObjTestLecteurPhraseAvecArbre)
 	$(GCC) -o TestLecteurPhraseAvecArbre $(ObjTestLecteurPhraseAvecArbre)
-	
