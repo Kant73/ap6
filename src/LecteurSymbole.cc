@@ -1,10 +1,13 @@
 #include <ctype.h>
 #include <string.h>
 #include <iostream>
+#include <stdlib.h>
 using namespace std;
 
 #include "LecteurSymbole.h"
 
+#define IS_NEWLIGNE(c) ((c) == '\n' || (c) == '\r')
+#define IS_SEPARATEUR(c) (IS_NEWLIGNE(c) || (c) == ' ' || (c) == '\t')
 
 LecteurSymbole::LecteurSymbole(string nomFich) :
 	lc(nomFich), symCour("") {
@@ -23,10 +26,7 @@ void LecteurSymbole::suivant() {
 
 
 void LecteurSymbole::sauterSeparateurs() {
-	while (lc.getCarCour() == ' '  || 
-	       lc.getCarCour() == '\t' || 
-	       lc.getCarCour() == '\r' || 
-	       lc.getCarCour() == '\n')
+	while (IS_SEPARATEUR(lc.getCarCour()))
 		lc.suivant();
 }
 
@@ -56,6 +56,8 @@ string LecteurSymbole::motSuivant() {
 		s += lc.getCarCour();
 		do {
 			lc.suivant();
+			if (IS_NEWLIGNE(lc.getCarCour()))
+				exit(0);
 			s += lc.getCarCour();
 		} while (lc.getCarCour() != '"');
 		lc.suivant();
@@ -76,7 +78,7 @@ string LecteurSymbole::motSuivant() {
 void LecteurSymbole::sauterCommentaires()
 {
 	while(lc.getCarCour() == '#') {
-		while(lc.getCarCour() != '\n' && lc.getCarCour() != '\r')
+		while(!IS_NEWLIGNE(lc.getCarCour()))
 			lc.suivant();
 		sauterSeparateurs();
 	}
