@@ -14,7 +14,7 @@ all: $(BINS)
 define COMP_template
   OBJ = $$(subst $$(suffix $(1)),.o,./$$(BUILDDIR)/$(1))
   DEP = $$(OBJ:.o=.d)
-
+  $$(info "Make: " $(1))
   $$(OBJ): $(1)
 	@$(CC) -o $$@ -c $(1) $(CFLAGS)
 
@@ -26,7 +26,7 @@ endef
 # Génère la compilation d'un binaire
 define BIN_template
   SRCS := $$(wildcard $$(SRCS_$(1)))
-  ALL_SRCS += $$(SRCS)
+  ALL_SRCS := $$(ALL_SRCS) $$(SRCS)
   OBJS_$(1) = $$(subst $$(suffix $$(firstword $$(SRCS))),.o,$$(addprefix ./$$(BUILDDIR)/,$$(SRCS)))
   DIRS_$(1) = $$(sort $$(dir $$(OBJS_$(1))))
   DEPS_$(1) = $$(OBJS_$(1):.o=.d)
