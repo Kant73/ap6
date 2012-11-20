@@ -18,9 +18,11 @@ private:
 	// implémentation de la grammaire
 	void programme();   //   <programme> ::= debut <seqInst> fin <EOF>
 	void seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
-	void inst();	    //        <inst> ::= <affectation> | <instSi>
+	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq>
     void instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
-	void affectation(); // <affectation> ::= <variable> = <expression>
+    void instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
+    void instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
+    void affectation(); // <affectation> ::= <variable> = <expression>
 	void expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
 	void facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
 	void opBinaire();   //   <opBinaire> ::= <opAdd> | <opMult>

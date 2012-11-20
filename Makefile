@@ -14,7 +14,7 @@ all: $(BINS)
 define COMP_template
   OBJ = $$(subst $$(suffix $(1)),.o,./$$(BUILDDIR)/$(1))
   DEP = $$(OBJ:.o=.d)
-  $$(info "Make: " $(1))
+
   $$(OBJ): $(1)
 	@$(CC) -o $$@ -c $(1) $(CFLAGS)
 

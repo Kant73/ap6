@@ -21,3 +21,7 @@ si
 sinonsi
 sinon
 finsi
+tantque
+fintantque
+repeter
+jusqua

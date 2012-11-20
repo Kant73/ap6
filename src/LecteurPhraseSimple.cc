@@ -40,17 +40,25 @@ void LecteurPhraseSimple::seqInst()
 	do {
 		inst();
 		sauterSymCour(";");
-    } while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon");
+    } while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua");
 	// tant que le symbole courant est un debut possible d'instruction...
 }
 
 
-// <inst> ::= <affectation> | <instSi>
+// <inst> ::= <affectation> | <instSi> | <instTq> | <instRepeter>
 void LecteurPhraseSimple::inst()
 {
     if (ls.getSymCour() == "si")
     {
         instSi();
+    }
+    else if (ls.getSymCour() == "tantque")
+    {
+        instTq();
+    }
+    else if (ls.getSymCour() == "repeter")
+    {
+        instRepeter();
     }
     else
     {
@@ -81,6 +89,27 @@ void LecteurPhraseSimple::instSi()
     sauterSymCour("finsi");
 }
 
+//<instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
+void LecteurPhraseSimple::instTq()
+{
+    sauterSymCour("tantque");
+    sauterSymCour("(");
+    expBool();
+    sauterSymCour(")");
+    seqInst();
+    sauterSymCour("fintantque");
+}
+
+//<instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
+void LecteurPhraseSimple::instRepeter()
+{
+    sauterSymCour("repeter");
+    seqInst();
+    sauterSymCour("jusqua");
+    sauterSymCour("(");
+    expBool();
+    sauterSymCour(")");
+}
 
 // <affectation> ::= <variable> = <expression>
 void LecteurPhraseSimple::affectation()

@@ -2,12 +2,26 @@
 debut
   i = 5+3;
   si ( i == 8 )
-    r = 1;
+    r1 = 1;
   sinonsi ( i == 7 )
-    r = 2;
+    r1 = 2;
   sinon
-    r = 3;
+    r1 = 3;
   finsi;
-  j = 7+3*5;
+
+  si (i==7)
+    r2=1;
+  sinon
+    r2=2;
+  finsi;
+
+  tantque (i < 5)
+    r3=1;
+    r3=2;
+  fintantque;
+
+  repeter
+    r4=1;
+  jusqua (r4 == 5);
 fin
 
