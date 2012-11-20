@@ -40,15 +40,45 @@ void LecteurPhraseSimple::seqInst()
 	do {
 		inst();
 		sauterSymCour(";");
-	} while (ls.getSymCour() == "<VARIABLE>");
+    } while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon");
 	// tant que le symbole courant est un debut possible d'instruction...
 }
 
 
-// <inst> ::= <affectation>
+// <inst> ::= <affectation> | <instSi>
 void LecteurPhraseSimple::inst()
 {
-	affectation();
+    if (ls.getSymCour() == "si")
+    {
+        instSi();
+    }
+    else
+    {
+        affectation();
+    }
+}
+//<instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
+void LecteurPhraseSimple::instSi()
+{
+    sauterSymCour("si");
+    sauterSymCour("(");
+    expBool();
+    sauterSymCour(")");
+    seqInst();
+    while (ls.getSymCour() == "sinonsi")
+    {
+        sauterSymCour("sinonsi");
+        sauterSymCour("(");
+        expBool();
+        sauterSymCour(")");
+        seqInst();
+    }
+    if (ls.getSymCour() == "sinon")
+    {
+        sauterSymCour("sinon");
+        seqInst();
+    }
+    sauterSymCour("finsi");
 }
 
 
