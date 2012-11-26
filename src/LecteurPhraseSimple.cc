@@ -119,23 +119,23 @@ void LecteurPhraseSimple::affectation()
 	expression();
 }
 
-//<expression> ::= <terme> { <opAdd> <terme> }
+//<expression> ::= <terme> { <opMult> <terme> }
 void LecteurPhraseSimple::expression()
 {
 	terme();
-	while (ls.getSymCour() == "+" || ls.getSymCour() == "-") {
-		opAdd();
+	while (ls.getSymCour() == "*" || ls.getSymCour() == "/") {
+		opMult();
 		terme();
 	}
 }
 
 
-//<terme> ::= <facteur> { <opMult> <facteur> }
+//<terme> ::= <facteur> { <opAdd> <facteur> }
 void LecteurPhraseSimple::terme()
 {
 	facteur();
-	while (ls.getSymCour() == "*" || ls.getSymCour() == "/") {
-		opMult();
+	while (ls.getSymCour() == "+" || ls.getSymCour() == "-") {
+		opAdd();
 		facteur();
 	}
 }
