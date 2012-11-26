@@ -18,19 +18,21 @@ private:
 	// implémentation de la grammaire
 	void programme();   //   <programme> ::= debut <seqInst> fin <EOF>
 	void seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
-	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq>
+	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq> | <instPour> | <instRepeter>
     void instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
     void instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
+    void instPour();    //    <instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
     void instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
     void affectation(); // <affectation> ::= <variable> = <expression>
-	void expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
+	void expression();  //  <expression> ::= <terme> { <opAdd> <terme> }
 	void facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
-	void opBinaire();   //   <opBinaire> ::= <opAdd> | <opMult>
 	void terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
 	void opAdd();       //       <opAdd> ::= + | -
 	void opMult();      //      <opMult> ::= * | /
-	void expBool();     //     <expBool> ::= <relation> { <opBool> <relation> }
-	void opBool();      //      <opBool> ::= et | ou
+	void expBool();   //       <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
+    void expBoolEt();   //   <expBoolEt> ::= <relation> { <opBoolEt> <relation> }
+	void opBoolOu();    //    <opBoolOu> ::= ou
+    void opBoolEt();    //    <opBoolEt> ::= et
 	void relation();    //    <relation> ::= <expression> { <opRel> <expression> }
 	void opRel();	    //       <opRel> ::= == | != | < | <= | > | >= 
 	void opUnaire();    //    <opUnaire> ::= - | non

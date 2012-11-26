@@ -1,27 +1,12 @@
 # commentaire
 debut
-  i = 5+3;
-  si ( i == 8 )
-    r1 = 1;
-  sinonsi ( i == 7 )
-    r1 = 2;
-  sinon
-    r1 = 3;
-  finsi;
-
-  si (i==7)
-    r2=1;
-  sinon
-    r2=2;
-  finsi;
-
-  tantque (i < 5)
-    r3=1;
-    r3=2;
-  fintantque;
-
-  repeter
-    r4=1;
-  jusqua (r4 == 5);
+	i = 18;
+	tantque (i < 5)
+		i = i-2;
+	fintantque;
+	pour (j = 0 ; j < 10 ; j = j+1)
+		i = i*2;
+		i = i-5;
+	finpour;
 fin
 
