@@ -18,10 +18,10 @@ public:
 	inline TableSymboles getTs ()   { return ts; } // accesseur
 
 private:
-    LecteurSymbole ls;  // le lecteur de symboles utilisé pour analyser le fichier
-    TableSymboles  ts;  // la table des symboles valués
+	LecteurSymbole ls;  // le lecteur de symboles utilisé pour analyser le fichier
+	TableSymboles  ts;  // la table des symboles valués
 
-    // implémentation de la grammaire
+	// implémentation de la grammaire
 	void programme();   //   <programme> ::= debut <seqInst> fin <EOF>
 	void seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
 	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire>
@@ -35,7 +35,7 @@ private:
 	void terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
 	void opAdd();       //       <opAdd> ::= + | -
 	void opMult();      //      <opMult> ::= * | /
-	void expBool();   //       <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
+	void expBool();     //     <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
 	void expBoolEt();   //   <expBoolEt> ::= <relation> { <opBoolEt> <relation> }
 	void opBoolOu();    //    <opBoolOu> ::= ou
 	void opBoolEt();    //    <opBoolEt> ::= et
@@ -45,10 +45,10 @@ private:
 	void instLire();    //    <instLire> ::= lire ( <variable> )
 	void instEcrire();  //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
 
-    // outils pour se simplifier l'analyse syntaxique
-    void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
-    void sauterSymCour (string ch);  // si symbole courant == ch, on passe au symbole suivant, sinon erreur : on arrete
-    void erreur (string mess);      // affiche les message d'erreur mess et arrete le programme
+	// outils pour se simplifier l'analyse syntaxique
+	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
+	void sauterSymCour (string ch);  // si symbole courant == ch, on passe au symbole suivant, sinon erreur : on arrete
+	void erreur (string mess);       // affiche les message d'erreur mess et arrete le programme
 };
 
 #endif /* LECTEURPHRASEAVECTABLE_H_ */

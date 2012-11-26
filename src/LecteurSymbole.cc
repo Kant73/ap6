@@ -6,18 +6,22 @@ using namespace std;
 
 #include "LecteurSymbole.h"
 
+
 #define IS_NEWLIGNE(c) ((c) == '\n' || (c) == '\r')
 #define IS_SEPARATEUR(c) (IS_NEWLIGNE(c) || (c) == ' ' || (c) == '\t')
 
-LecteurSymbole::LecteurSymbole(string nomFich) :
-	lc(nomFich), symCour("") {
+
+LecteurSymbole::LecteurSymbole(string nomFich) : lc(nomFich), symCour("")
+{
 	suivant(); // pour lire le premier symbole
 }
 
 
-void LecteurSymbole::suivant() {
+void LecteurSymbole::suivant()
+{
 	sauterSeparateurs();
 	sauterCommentaires();
+
 	// on est maintenant positionne sur le premier caractère d'un symbole
 	ligne = lc.getLigne();
 	colonne = lc.getColonne();
@@ -25,13 +29,15 @@ void LecteurSymbole::suivant() {
 }
 
 
-void LecteurSymbole::sauterSeparateurs() {
+void LecteurSymbole::sauterSeparateurs()
+{
 	while (IS_SEPARATEUR(lc.getCarCour()))
 		lc.suivant();
 }
 
 
-string LecteurSymbole::motSuivant() {
+string LecteurSymbole::motSuivant()
+{
 	static string s;
 	s = "";
 
@@ -61,6 +67,7 @@ string LecteurSymbole::motSuivant() {
 			s += lc.getCarCour();
 		} while (lc.getCarCour() != '"');
 		lc.suivant();
+
 	} else if (lc.getCarCour() != EOF) {
 		// c'est un caractere special
 		s = lc.getCarCour();
@@ -71,6 +78,7 @@ string LecteurSymbole::motSuivant() {
 			lc.suivant();
 		}
 	}
+
 	return s;
 }
 

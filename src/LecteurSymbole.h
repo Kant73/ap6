@@ -12,10 +12,10 @@ class LecteurSymbole {
 public:
 	LecteurSymbole(string nomFich);    // résultat : symCour = premier symbole du fichier nomFich
 	void suivant();                    // passe au symbole suivant du fichier
-	inline Symbole getSymCour()      { return symCour; } // accesseur
-	inline unsigned int getLigne()   { return ligne;   } // accesseur
-	inline unsigned int getColonne() { return colonne; } // accesseur
-
+	inline Symbole getSymCour()      { return symCour; }
+	inline unsigned int getLigne()   { return ligne;   }
+	inline unsigned int getColonne() { return colonne; }
+	
 private:
 	LecteurCaractere lc;         // le lecteur de caracteres
 	Symbole symCour;             // le symbole courant du lecteur de symboles

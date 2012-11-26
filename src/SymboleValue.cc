@@ -1,9 +1,9 @@
 #include "SymboleValue.h"
 #include <stdlib.h>
 
-////////////////////////////////////////////////////////////////////////////////
-SymboleValue::SymboleValue(Symbole s) :
-	Symbole(s.getChaine()) {
+
+SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())
+{
 	if (s == "<ENTIER>") {
 		valeur = atoi(s.getChaine().c_str()); // c_str convertit une string en char*
 		defini = true;
@@ -13,15 +13,17 @@ SymboleValue::SymboleValue(Symbole s) :
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void SymboleValue::afficher(unsigned short indentation) {
+
+void SymboleValue::afficher(unsigned short indentation)
+{
 	Noeud::afficher(indentation);
 	cout << "Feuille - Symbole value : " << getChaine() << endl; // on affiche la chaine du symbole
 }
 
-////////////////////////////////////////////////////////////////////////////////
+
 // Attention : cette fonction (operator) n'est pas membre de la classe SymboleValue
-ostream & operator <<(ostream & cout, SymboleValue symb) {
+ostream & operator <<(ostream & cout, SymboleValue symb)
+{
 	cout << (Symbole) symb << "\t\t - Valeur=";
 	if (symb.defini)
 		cout << symb.valeur << " ";

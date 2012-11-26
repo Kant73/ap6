@@ -1,10 +1,7 @@
 #include "TableSymboles.h"
 
-
 // Construit une table des symboles valués vide
-TableSymboles::TableSymboles():table()
-{
-}
+TableSymboles::TableSymboles():table() {}
 
 
 // si s est identique à un symbole valué déjà présent dans la table,
@@ -30,8 +27,10 @@ ostream & operator <<(ostream &cout, TableSymboles ts)
 {
 	cout << endl << "Contenu de la Table des Symboles Values :" << endl
 	     <<         "=========================================" << endl << endl;
+
 	for (unsigned int i = 0; i < ts.table.size(); i++)
 		cout << "  " << *(ts.table[i]) << endl;
+
 	cout << endl;
 	return cout;
 }

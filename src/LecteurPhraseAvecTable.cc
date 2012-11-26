@@ -5,14 +5,13 @@
 using namespace std;
 
 // Permet de tester le type d'un opérateur
-#define IS_OPBOOL(s) ((s) == "et" || (s) == "ou")
-#define IS_OPREL(s)  ((s) == "==" || (s) == "!=" || (s) == "<" || (s) == ">" || (s) == "<=" || (s) == ">=")
-#define IS_OPUNAIRE(s) ((s) == "-" || (s) == "non")
+#define IS_OPBOOL(s)   ((s) == "et" || (s) == "ou")
+#define IS_OPREL(s)    ((s) == "==" || (s) == "!=" || (s) == "<" || (s) == ">" || (s) == "<=" || (s) == ">=")
+#define IS_OPUNAIRE(s) ((s) == "-"  || (s) == "non")
+#define IS_OPADD(s)    ((s) == "+"  || (s) == "-")
+#define IS_OPMULT(s)   ((s) == "*"  || (s) == "/")
 
-////////////////////////////////////////////////////////////////////////////////
-LecteurPhraseAvecTable::LecteurPhraseAvecTable(string nomFich) :
-	ls(nomFich), ts() {
-}
+LecteurPhraseAvecTable::LecteurPhraseAvecTable(string nomFich) : ls(nomFich), ts() {}
 
 void LecteurPhraseAvecTable::analyse()
 {
@@ -24,7 +23,6 @@ void LecteurPhraseAvecTable::analyse()
 // <programme> ::= debut <seqInst> fin FIN_FICHIER
 void LecteurPhraseAvecTable::programme()
 {
-	
 	sauterSymCour("debut");
 	seqInst();
 	sauterSymCour("fin");
@@ -35,11 +33,17 @@ void LecteurPhraseAvecTable::programme()
 // <seqInst> ::= <inst> ; { <inst> ; }
 void LecteurPhraseAvecTable::seqInst()
 {
+	// tant que le symbole courant est un debut possible d'instruction...
 	do {
 		inst();
 		sauterSymCour(";");
-	} while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua" && ls.getSymCour() != "finpour");
-	// tant que le symbole courant est un debut possible d'instruction...
+	} while (ls.getSymCour() != "fin" &&
+		 ls.getSymCour() != "finsi" &&
+		 ls.getSymCour() != "sinonsi" &&
+		 ls.getSymCour() != "sinon" &&
+		 ls.getSymCour() != "fintantque" &&
+		 ls.getSymCour() != "jusqua" &&
+		 ls.getSymCour() != "finpour");
 }
 
 
@@ -61,66 +65,73 @@ void LecteurPhraseAvecTable::inst()
 	else
 		affectation();
 }
+
+
 //<instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 void LecteurPhraseAvecTable::instSi()
 {
-    sauterSymCour("si");
-    sauterSymCour("(");
-    expBool();
-    sauterSymCour(")");
-    seqInst();
-    while (ls.getSymCour() == "sinonsi")
-    {
-        sauterSymCour("sinonsi");
-        sauterSymCour("(");
-        expBool();
-        sauterSymCour(")");
-        seqInst();
-    }
-    if (ls.getSymCour() == "sinon")
-    {
-        sauterSymCour("sinon");
-        seqInst();
-    }
-    sauterSymCour("finsi");
+	sauterSymCour("si");
+	sauterSymCour("(");
+	expBool();
+	sauterSymCour(")");
+	seqInst();
+
+	while (ls.getSymCour() == "sinonsi") {
+		sauterSymCour("sinonsi");
+		sauterSymCour("(");
+		expBool();
+		sauterSymCour(")");
+		seqInst();
+	}
+
+	if (ls.getSymCour() == "sinon") {
+		sauterSymCour("sinon");
+		seqInst();
+	}
+
+	sauterSymCour("finsi");
 }
+
 
 //<instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
 void LecteurPhraseAvecTable::instTq()
 {
-    sauterSymCour("tantque");
-    sauterSymCour("(");
-    expBool();
-    sauterSymCour(")");
-    seqInst();
-    sauterSymCour("fintantque");
+	sauterSymCour("tantque");
+	sauterSymCour("(");
+	expBool();
+	sauterSymCour(")");
+	seqInst();
+	sauterSymCour("fintantque");
 }
+
 
 //<instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
 void LecteurPhraseAvecTable::instPour()
 {
-    sauterSymCour("pour");
-    sauterSymCour("(");
-    affectation();
-    sauterSymCour(";");
-    expBool();
-    sauterSymCour(";");
-    affectation();
-    sauterSymCour(")");
-    seqInst();
-    sauterSymCour("finpour");
+	sauterSymCour("pour");
+	sauterSymCour("(");
+	affectation();
+	sauterSymCour(";");
+	expBool();
+	sauterSymCour(";");
+	affectation();
+	sauterSymCour(")");
+	seqInst();
+	sauterSymCour("finpour");
 }
+
 
 //<instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
 void LecteurPhraseAvecTable::instRepeter()
 {
-    sauterSymCour("repeter");
-    seqInst();
-    sauterSymCour("jusqua");
-    sauterSymCour("(");
-    expBool();
-    sauterSymCour(")");
+	sauterSymCour("repeter");
+	seqInst();
+	sauterSymCour("jusqua");
+	sauterSymCour("(");
+	expBool();
+	sauterSymCour(")");
 }
+
 
 // <affectation> ::= <variable> = <expression>
 void LecteurPhraseAvecTable::affectation()
@@ -130,11 +141,12 @@ void LecteurPhraseAvecTable::affectation()
 	expression();
 }
 
+
 //<expression> ::= <terme> { <opAdd> <terme> }
 void LecteurPhraseAvecTable::expression()
 {
 	terme();
-	while (ls.getSymCour() == "+" || ls.getSymCour() == "-") {
+	while (IS_OPADD(ls.getSymCour())) {
 		opAdd();
 		terme();
 	}
@@ -145,7 +157,7 @@ void LecteurPhraseAvecTable::expression()
 void LecteurPhraseAvecTable::terme()
 {
 	facteur();
-	while (ls.getSymCour() == "*" || ls.getSymCour() == "/") {
+	while (IS_OPMULT(ls.getSymCour())) {
 		opMult();
 		facteur();
 	}
@@ -172,7 +184,7 @@ void LecteurPhraseAvecTable::facteur()
 //<opAdd> ::= + | -
 void LecteurPhraseAvecTable::opAdd()
 {
-	if (ls.getSymCour() == "+" || ls.getSymCour() == "-")
+	if (IS_OPADD(ls.getSymCour()))
 		ls.suivant();
 	else
 		erreur("<opAdd>");
@@ -182,7 +194,7 @@ void LecteurPhraseAvecTable::opAdd()
 //<opMult> ::= * | /
 void LecteurPhraseAvecTable::opMult()
 {
-	if (ls.getSymCour() == "*" || ls.getSymCour() == "/")
+	if (IS_OPMULT(ls.getSymCour()))
 		ls.suivant();
 	else
 		erreur("<opMult>");
@@ -203,11 +215,11 @@ void LecteurPhraseAvecTable::expBool()
 //<expBoolEt> ::= <relation> { <opBoolEt> <relation> }
 void LecteurPhraseAvecTable::expBoolEt()
 {
-    relation();
-    while ((ls.getSymCour() == "et")) {
-        opBoolEt();
-        relation();
-    }
+	relation();
+	while ((ls.getSymCour() == "et")) {
+		opBoolEt();
+		relation();
+	}
 }
 
 
@@ -223,7 +235,7 @@ void LecteurPhraseAvecTable::opBoolOu()
 //<opBoolEt> ::= et
 void LecteurPhraseAvecTable::opBoolEt()
 {
-    if (ls.getSymCour() == "et")
+	if (ls.getSymCour() == "et")
 		ls.suivant();
 	else
 		erreur("<opBool>");
@@ -283,55 +295,58 @@ void LecteurPhraseAvecTable::instEcrire()
 	sauterSymCour(")");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void LecteurPhraseAvecTable::testerSymCour(string ch) {
+
+void LecteurPhraseAvecTable::testerSymCour(string ch)
+{
 	if (ls.getSymCour() != ch) {
 		cout << endl << "-------- Erreur ligne " << ls.getLigne()
-				<< " - Colonne " << ls.getColonne() << endl << "   Attendu : "
-				<< ch << endl << "   Trouve  : " << ls.getSymCour() << endl
-				<< endl;
+		     << " - Colonne " << ls.getColonne() << endl << "   Attendu : "
+		     << ch << endl << "   Trouve  : " << ls.getSymCour() << endl
+		     << endl;
 		exit(0); // plus tard, on levera une exception
 	}
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void LecteurPhraseAvecTable::sauterSymCour(string ch) {
+
+void LecteurPhraseAvecTable::sauterSymCour(string ch)
+{
 	testerSymCour(ch);
 	ls.suivant();
 }
 
-////////////////////////////////////////////////////////////////////////////////
-void LecteurPhraseAvecTable::erreur(string mess) {
+
+void LecteurPhraseAvecTable::erreur(string mess)
+{
 	cout << endl << "-------- Erreur ligne " << ls.getLigne() << " - Colonne "
-			<< ls.getColonne() << endl << "   Attendu : " << mess << endl
-			<< "   Trouve  : " << ls.getSymCour() << endl << endl;
+	     << ls.getColonne() << endl << "   Attendu : " << mess << endl
+	     << "   Trouve  : " << ls.getSymCour() << endl << endl;
 	exit(0); // plus tard, on levera une exception
 }
 
 /*void LecteurPhraseAvecTable::facteur() {
 // <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
 
-	if (ls.getSymCour()=="<VARIABLE>" || ls.getSymCour()=="<ENTIER>") {
-		ts.chercheAjoute(ls.getSymCour());
-		ls.suivant();
-	} else if (ls.getSymCour()=="-") {
-		ls.suivant();
-		facteur();
-	} else if (ls.getSymCour()=="(") {
-		ls.suivant();
-		expression();
-		sauterSymCour(")");
-	} else
-		erreur("<facteur>");
+if (ls.getSymCour()=="<VARIABLE>" || ls.getSymCour()=="<ENTIER>") {
+ts.chercheAjoute(ls.getSymCour());
+ls.suivant();
+} else if (ls.getSymCour()=="-") {
+ls.suivant();
+facteur();
+} else if (ls.getSymCour()=="(") {
+ls.suivant();
+expression();
+sauterSymCour(")");
+} else
+erreur("<facteur>");
 }
 
 void LecteurPhraseAvecTable::affectation() {
 // <affectation> ::= <variable> = <expression>
 
-	//sauterSymCour("<VARIABLE>");
-	testerSymCour("<VARIABLE>");
-	ts.chercheAjoute(ls.getSymCour());
-	ls.suivant();
-	sauterSymCour("=");
-	expression();
+//sauterSymCour("<VARIABLE>");
+testerSymCour("<VARIABLE>");
+ts.chercheAjoute(ls.getSymCour());
+ls.suivant();
+sauterSymCour("=");
+expression();
 }*/

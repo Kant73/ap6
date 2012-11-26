@@ -16,7 +16,6 @@ public:
 	// et on renvoie un pointeur sur le nouveau symbole valué inséré
 
 	friend ostream & operator << (ostream & cout, TableSymboles ts); // affiche ts sur cout
-
 private:
 	vector<SymboleValue*> table; // la table des symboles valués, triée sur la chaine
 };

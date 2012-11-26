@@ -25,23 +25,23 @@ public:
 	
 
 private:
-    LecteurSymbole ls;    // le lecteur de symboles utilisé pour analyser le fichier
-    TableSymboles  ts;    // la table des symboles valués
-    Noeud*         arbre; // l'arbre abstrait
+	LecteurSymbole ls;    // le lecteur de symboles utilisé pour analyser le fichier
+	TableSymboles  ts;    // la table des symboles valués
+	Noeud*         arbre; // l'arbre abstrait
 
-    // implémentation de la grammaire
-    Noeud*  programme();   //   <programme> ::= debut <seqInst> fin FIN_FICHIER
-    Noeud*  seqInst();	   //     <seqInst> ::= <inst> ; { <inst> ; }
-    Noeud*  inst();	       //        <inst> ::= <affectation>
-    Noeud*  affectation(); // <affectation> ::= <variable> = <expression>
-    Noeud*  expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
-    Noeud*  facteur();     //     <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
-    Symbole opBinaire();   //   <opBinaire> ::= + | - | *  | / 
+	// implémentation de la grammaire
+	Noeud*  programme();   //   <programme> ::= debut <seqInst> fin FIN_FICHIER
+	Noeud*  seqInst();     //     <seqInst> ::= <inst> ; { <inst> ; }
+	Noeud*  inst();	       //        <inst> ::= <affectation>
+	Noeud*  affectation(); // <affectation> ::= <variable> = <expression>
+	Noeud*  expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
+	Noeud*  facteur();     //     <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
+	Symbole opBinaire();   //   <opBinaire> ::= + | - | *  | / 
 
-    // outils pour se simplifier l'analyse syntaxique
-    void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
-    void sauterSymCour (string ch);  // si symbole courant == ch, on passe au symbole suivant, sinon erreur : on arrete
-    void erreur (string mess);      // affiche les message d'erreur mess et arrete le programme
+	// outils pour se simplifier l'analyse syntaxique
+	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
+	void sauterSymCour (string ch);  // si symbole courant == ch, on passe au symbole suivant, sinon erreur : on arrete
+	void erreur (string mess);      // affiche les message d'erreur mess et arrete le programme
 };
 
 #endif /* LECTEURPHRASEAVECARBRE_H_ */
