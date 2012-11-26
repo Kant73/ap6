@@ -36,7 +36,6 @@ private:
 	void relation();    //    <relation> ::= <expression> { <opRel> <expression> }
 	void opRel();	    //       <opRel> ::= == | != | < | <= | > | >= 
 	void opUnaire();    //    <opUnaire> ::= - | non
-
 	void instLire();    //    <instLire> ::= lire ( <variable> )
 	void instEcrire();  //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
 
