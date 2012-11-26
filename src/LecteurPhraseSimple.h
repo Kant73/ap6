@@ -18,11 +18,11 @@ private:
 	// implémentation de la grammaire
 	void programme();   //   <programme> ::= debut <seqInst> fin <EOF>
 	void seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
-	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq>
-    void instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
-    void instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
-    void instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
-    void affectation(); // <affectation> ::= <variable> = <expression>
+	void inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq> | instLire | instEcrire
+	void instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
+	void instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
+	void instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
+	void affectation(); // <affectation> ::= <variable> = <expression>
 	void expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
 	void facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
 	void opBinaire();   //   <opBinaire> ::= <opAdd> | <opMult>
@@ -34,6 +34,10 @@ private:
 	void relation();    //    <relation> ::= <expression> { <opRel> <expression> }
 	void opRel();	    //       <opRel> ::= == | != | < | <= | > | >= 
 	void opUnaire();    //    <opUnaire> ::= - | non
+
+	void instLire();    //    <instLire> ::= lire ( <variable> )
+	void instEcrire();  //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
+
 
 	// outils pour se simplifier l'analyse syntaxique
 	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien

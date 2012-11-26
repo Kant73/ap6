@@ -25,3 +25,5 @@ tantque
 fintantque
 repeter
 jusqua
+ecrire
+lire

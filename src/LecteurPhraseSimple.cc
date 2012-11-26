@@ -40,7 +40,7 @@ void LecteurPhraseSimple::seqInst()
 	do {
 		inst();
 		sauterSymCour(";");
-    } while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua");
+	} while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua");
 	// tant que le symbole courant est un debut possible d'instruction...
 }
 
@@ -48,22 +48,19 @@ void LecteurPhraseSimple::seqInst()
 // <inst> ::= <affectation> | <instSi> | <instTq> | <instRepeter>
 void LecteurPhraseSimple::inst()
 {
-    if (ls.getSymCour() == "si")
-    {
-        instSi();
-    }
-    else if (ls.getSymCour() == "tantque")
-    {
-        instTq();
-    }
-    else if (ls.getSymCour() == "repeter")
-    {
-        instRepeter();
-    }
-    else
-    {
-        affectation();
-    }
+	if (ls.getSymCour() == "si")
+		instSi();
+	else if (ls.getSymCour() == "tantque")
+		instTq();
+	else if (ls.getSymCour() == "repeter")
+		instRepeter();
+	else if (ls.getSymCour() == "lire")
+		instLire();
+	else if (ls.getSymCour() == "ecrire")
+		instEcrire();
+	else
+		affectation();
+
 }
 //<instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 void LecteurPhraseSimple::instSi()
@@ -230,6 +227,27 @@ void LecteurPhraseSimple::opUnaire()
 }
 
 
+//    <instLire> ::= lire ( <variable> )
+void LecteurPhraseSimple::instLire()
+{
+	sauterSymCour("lire");
+	sauterSymCour("(");
+	sauterSymCour("<VARIABLE>");
+	sauterSymCour(")");
+}
+
+
+//  <instEcrire> ::= ecrire ( <expression> | <chaine> )
+void LecteurPhraseSimple::instEcrire()
+{
+	sauterSymCour("ecrire");
+	sauterSymCour("(");
+	if (ls.getSymCour() == "<CHAINE>")
+		ls.suivant();
+	else
+		expression();
+	sauterSymCour(")");
+}
 
 
 void LecteurPhraseSimple::testerSymCour(string ch) {
@@ -257,3 +275,5 @@ void LecteurPhraseSimple::erreur(string mess)
 	     << "   Trouve  : " << ls.getSymCour() << endl << endl;
 	exit(0); // plus tard, on levera une exception
 }
+
+
