@@ -40,7 +40,7 @@ void LecteurPhraseSimple::seqInst()
 	do {
 		inst();
 		sauterSymCour(";");
-	} while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua");
+	} while (ls.getSymCour() != "fin" && ls.getSymCour() != "finsi" && ls.getSymCour() != "sinonsi" && ls.getSymCour() != "sinon" && ls.getSymCour() != "fintantque" && ls.getSymCour() != "jusqua" && ls.getSymCour() != "finpour");
 	// tant que le symbole courant est un debut possible d'instruction...
 }
 
@@ -58,9 +58,10 @@ void LecteurPhraseSimple::inst()
 		instLire();
 	else if (ls.getSymCour() == "ecrire")
 		instEcrire();
+	else if (ls.getSymCour() == "pour")
+		instPour();
 	else
 		affectation();
-
 }
 //<instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 void LecteurPhraseSimple::instSi()
@@ -95,6 +96,21 @@ void LecteurPhraseSimple::instTq()
     sauterSymCour(")");
     seqInst();
     sauterSymCour("fintantque");
+}
+
+//<instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
+void LecteurPhraseSimple::instPour()
+{
+    sauterSymCour("pour");
+    sauterSymCour("(");
+    affectation();
+    sauterSymCour(";");
+    expBool();
+    sauterSymCour(";");
+    affectation();
+    sauterSymCour(")");
+    seqInst();
+    sauterSymCour("finpour");
 }
 
 //<instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
@@ -175,21 +191,41 @@ void LecteurPhraseSimple::opMult()
 }
 
 
-//     <expBool> ::= <relation> { <opBool> <relation> }
+//<expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
 void LecteurPhraseSimple::expBool()
 {
-	relation();
-	while (IS_OPBOOL(ls.getSymCour())) {
-		opBool();
-		relation();
+	expBoolEt();
+	while (ls.getSymCour() == "ou") {
+		opBoolOu();
+		expBoolEt();
 	}
 }
 
 
-//      <opBool> ::= et | ou
-void LecteurPhraseSimple::opBool()
+//<expBoolEt> ::= <relation> { <opBoolEt> <relation> }
+void LecteurPhraseSimple::expBoolEt()
 {
-	if (IS_OPBOOL(ls.getSymCour()))
+    relation();
+    while ((ls.getSymCour() == "et")) {
+        opBoolEt();
+        relation();
+    }
+}
+
+
+//<opBool> ::= ou
+void LecteurPhraseSimple::opBoolOu()
+{
+	if (ls.getSymCour() == "ou")
+		ls.suivant();
+	else
+		erreur("<opBool>");
+}
+
+//<opBoolEt> ::= et
+void LecteurPhraseSimple::opBoolEt()
+{
+    if (ls.getSymCour() == "et")
 		ls.suivant();
 	else
 		erreur("<opBool>");

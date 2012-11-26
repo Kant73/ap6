@@ -27,3 +27,6 @@ repeter
 jusqua
 ecrire
 lire
+pour
+finpour
+
