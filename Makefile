@@ -26,10 +26,10 @@ endef
 # Génère la compilation d'un binaire
 define BIN_template
   SRCS := $$(wildcard $$(SRCS_$(1)))
-  ALL_SRCS := $$(ALL_SRCS) $$(SRCS)
-  OBJS_$(1) = $$(subst $$(suffix $$(firstword $$(SRCS))),.o,$$(addprefix ./$$(BUILDDIR)/,$$(SRCS)))
-  DIRS_$(1) = $$(sort $$(dir $$(OBJS_$(1))))
-  DEPS_$(1) = $$(OBJS_$(1):.o=.d)
+  ALL_SRCS  := $$(ALL_SRCS) $$(SRCS)
+  OBJS_$(1) := $$(subst $$(suffix $$(firstword $$(SRCS))),.o,$$(addprefix ./$$(BUILDDIR)/,$$(SRCS)))
+  DIRS_$(1) := $$(sort $$(dir $$(OBJS_$(1))))
+  DEPS_$(1) := $$(OBJS_$(1):.o=.d)
   $$(shell mkdir -p $$(DIRS_$(1)))
 
   $(1): $$(OBJS_$(1))
@@ -41,7 +41,7 @@ define BIN_template
     clean_$(1):
 	@rm -f $$(OBJS_$(1)) $$(DEPS_$(1))
 	@rm -f $(1)
-	@find $$(DIRS_$(1)) -depth -type d -empty -exec rmdir "{}" \; 2> /dev/null
+	@find $$(DIRS_$(1)) -depth -type d -empty -exec rmdir "{}" \; 2> /dev/null || true
     ALL_CLEANS += clean_$(1)
   endif
 endef
@@ -50,3 +50,4 @@ $(foreach b,$(BINS),$(eval $(call BIN_template,$(b))))
 $(foreach s,$(sort $(ALL_SRCS)),$(eval $(call COMP_template,$(s))))
 .PHONY: all clean $(ALL_CLEANS)
 clean: $(ALL_CLEANS)
+	@rmdir -p --ignore-fail-on-non-empty $(BUILDDIR)
