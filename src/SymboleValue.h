@@ -15,7 +15,7 @@ public:
 	SymboleValue(Symbole s); // construit un symbole valué à partir d'un symbole existant s
 	~SymboleValue( ) {}
 	void        afficher (unsigned short indentation = 0); // affiche le symbole en tant que noeud de l'arbre
-	inline int  getvaleur()              { return valeur;                        }
+	inline int  getValeur()              { return valeur;                        }
 	inline void setValeur(int valeur)    { this->valeur = valeur; defini = true; }
 	inline bool estDefini()              { return defini;                        }
 	

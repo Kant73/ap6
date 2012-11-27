@@ -168,7 +168,10 @@ void LecteurPhraseAvecTable::terme()
 void LecteurPhraseAvecTable::facteur()
 {
 	if (ls.getSymCour() == "<VARIABLE>" || ls.getSymCour() == "<ENTIER>" || ls.getSymCour() == "<CHAINE>")
+	{
+		ts.chercheAjoute(ls.getSymCour());
 		ls.suivant();
+	}
 	else if (IS_OPUNAIRE(ls.getSymCour())) {
 		ls.suivant();
 		expBool();
