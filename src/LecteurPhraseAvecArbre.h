@@ -29,14 +29,28 @@ private:
 	TableSymboles  ts;    // la table des symboles valués
 	Noeud*         arbre; // l'arbre abstrait
 
-	// implémentation de la grammaire
-	Noeud*  programme();   //   <programme> ::= debut <seqInst> fin FIN_FICHIER
-	Noeud*  seqInst();     //     <seqInst> ::= <inst> ; { <inst> ; }
-	Noeud*  inst();	       //        <inst> ::= <affectation>
-	Noeud*  affectation(); // <affectation> ::= <variable> = <expression>
-	Noeud*  expression();  //  <expression> ::= <facteur> { <opBinaire> <facteur> }
-	Noeud*  facteur();     //     <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
-	Symbole opBinaire();   //   <opBinaire> ::= + | - | *  | / 
+	Noeud* programme();   //   <programme> ::= debut <seqInst> fin <EOF>
+	Noeud* seqInst();	    //     <seq_ins> ::= <inst> ; { <inst> ; }
+	Noeud* inst();	    //        <inst> ::= <affectation> | <instSi> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire>
+	Noeud* instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
+	Noeud* instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
+	Noeud* instPour();    //    <instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
+	Noeud* instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
+	Noeud* affectation(); // <affectation> ::= <variable> = <expression>
+	Noeud* expression();  //  <expression> ::= <terme> { <opAdd> <terme> }
+	Noeud* facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
+	Noeud* terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
+	Symbole opAdd();       //       <opAdd> ::= + | -
+	Symbole opMult();      //      <opMult> ::= * | /
+	Noeud* expBool();     //     <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
+	Noeud* expBoolEt();   //   <expBoolEt> ::= <relation> { <opBoolEt> <relation> }
+	Symbole opBoolOu();    //    <opBoolOu> ::= ou
+	Symbole opBoolEt();    //    <opBoolEt> ::= et
+	Noeud* relation();    //    <relation> ::= <expression> { <opRel> <expression> }
+	Symbole opRel();	    //       <opRel> ::= == | != | < | <= | > | >= 
+	Symbole opUnaire();    //    <opUnaire> ::= - | non
+	Noeud* instLire();    //    <instLire> ::= lire ( <variable> )
+	Noeud* instEcrire();  //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
 
 	// outils pour se simplifier l'analyse syntaxique
 	void testerSymCour (string ch);  // si symbole courant != ch, erreur : on arrete le programme, sinon rien
