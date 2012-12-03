@@ -232,7 +232,7 @@ void LecteurPhraseAvecTable::opBoolOu()
 	if (ls.getSymCour() == "ou")
 		ls.suivant();
 	else
-		erreur("<opBoolOu>");
+		erreur("<opBool>");
 }
 
 //<opBoolEt> ::= et
@@ -241,7 +241,7 @@ void LecteurPhraseAvecTable::opBoolEt()
 	if (ls.getSymCour() == "et")
 		ls.suivant();
 	else
-		erreur("<opBoolEt>");
+		erreur("<opBool>");
 }
 
 
@@ -325,3 +325,31 @@ void LecteurPhraseAvecTable::erreur(string mess)
 	     << "   Trouve  : " << ls.getSymCour() << endl << endl;
 	exit(0); // plus tard, on levera une exception
 }
+
+/*void LecteurPhraseAvecTable::facteur() {
+// <facteur> ::= <entier>  |  <variable>  |  - <facteur>  |  ( <expression> )
+
+if (ls.getSymCour()=="<VARIABLE>" || ls.getSymCour()=="<ENTIER>") {
+ts.chercheAjoute(ls.getSymCour());
+ls.suivant();
+} else if (ls.getSymCour()=="-") {
+ls.suivant();
+facteur();
+} else if (ls.getSymCour()=="(") {
+ls.suivant();
+expression();
+sauterSymCour(")");
+} else
+erreur("<facteur>");
+}
+
+void LecteurPhraseAvecTable::affectation() {
+// <affectation> ::= <variable> = <expression>
+
+//sauterSymCour("<VARIABLE>");
+testerSymCour("<VARIABLE>");
+ts.chercheAjoute(ls.getSymCour());
+ls.suivant();
+sauterSymCour("=");
+expression();
+}*/
