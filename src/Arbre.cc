@@ -2,6 +2,7 @@
 #include "Arbre.h"
 #include "Symbole.h"
 #include "SymboleValue.h"
+#include "Valeur.h"
 
 NoeudSeqInst::NoeudSeqInst() : tabInst() {}
 
@@ -123,3 +124,27 @@ void NoeudOperateurBool::afficher(unsigned short indentation)
 	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
 }
 
+
+NoeudInstLire::NoeudInstLire(Noeud *variable)
+{
+	// TODO: put more checks
+	var = variable;
+}
+
+
+Valeur* NoeudInstLire::getValeur()
+{
+	string str;
+	Valeur *val;
+	cin >> str;
+	val = new ValeurChaine(str);
+
+	((SymboleValue*)var)->setValeur(val);
+	return val;
+}
+
+
+void NoeudInstLire::afficher(unsigned short indentation)
+{
+
+}

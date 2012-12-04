@@ -1,6 +1,7 @@
+#include <stdlib.h>
+
 #include "SymboleValue.h"
 #include "Valeur.h"
-#include <stdlib.h>
 
 
 SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())
@@ -15,6 +16,18 @@ SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())
 	}
 }
 
+
+void SymboleValue::setValeur(Valeur* val)
+{ 
+	if (typeid(val) == typeid(ValeurEntiere))
+		this->val = new ValeurEntiere(((ValeurEntiere*)val)->getValeur());
+	else if (typeid(val) == typeid(ValeurReelle))
+		this->val = new ValeurReelle(((ValeurReelle*)val)->getValeur());
+	else if (typeid(val) == typeid(ValeurChaine))
+		this->val = new ValeurChaine(((ValeurChaine*)val)->getValeur());
+	defini = true;
+}
+	
 
 void SymboleValue::afficher(unsigned short indentation)
 {

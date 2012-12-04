@@ -9,8 +9,6 @@
 using namespace std;
 
 
-
-
 class Valeur {
 	public:
 		virtual ~Valeur() {};
