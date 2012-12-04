@@ -10,13 +10,15 @@
 using namespace std;
 
 #include "Symbole.h"
+#include "Valeur.h"
 
 
 // classe abstraite dont dériveront toutes les classes servant à représenter l'arbre abstrait
 // Remarque : la classe ne contient aucun constructeur
 class Noeud {
 public:
-	virtual int  getValeur() = 0; // méthode pure (non implémentée) qui rend la classe abstraite
+	virtual Valeur* getValeur() = 0; // méthode pure (non implémentée) qui rend la classe abstraite
+	
 	virtual void afficher(unsigned short indentation = 0) { cout << setw(4 * indentation) << " "; }
 	// pour afficher un noeud avec un décalage (indentation) proportionnel à son niveau dans l'arbre
 
@@ -31,7 +33,7 @@ public:
 	NoeudSeqInst();   // construit une séquence d'instruction vide
 	~NoeudSeqInst() {} // à cause du destructeur virtuel de la classe Noeud
 
-	int getValeur(); // évalue chaque instruction de la séquence
+	Valeur* getValeur(); // évalue chaque instruction de la séquence
 	void afficher(unsigned short indentation=0); // affiche la séquence d'instructions
 	void ajouteInstruction(Noeud* instruction);  // ajoute une instruction à la séquence
 
@@ -47,7 +49,7 @@ public:
 	NoeudAffectation(Noeud* variable, Noeud* expression); // construit une affectation
 	~NoeudAffectation() {} // à cause du destructeur virtuel de la classe Noeud
 
-	int getValeur(); // évalue l'expression et affecte sa valeur à la variable
+	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
 
 private:
@@ -64,7 +66,24 @@ public:
 	NoeudOperateurBinaire(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit);
 	~NoeudOperateurBinaire() {} // à cause du destructeur virtuel de la classe Noeud
 
-	int getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur
+	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur
+	void afficher(unsigned short indentation = 0); // affiche l'opération
+
+private:
+	Symbole operateur;
+	Noeud*  operandeGauche;
+	Noeud*  operandeDroit;
+};
+
+
+// classe pour représenter un noeud "expBool"
+// composé d'un opérateur (ou et) et de 2 fils : l'opérande gauche et l'opérande droit
+class NoeudOperateurBool : public Noeud {
+public:
+	NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit);
+	~NoeudOperateurBool() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur (0 pour faux et 1 pour vrai)
 	void afficher(unsigned short indentation = 0); // affiche l'opération
 
 private:
