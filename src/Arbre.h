@@ -73,4 +73,18 @@ private:
 	Noeud*  operandeDroit;
 };
 
+
+// Noeud d'instruction Lire
+class NoeudInstLire : public Noeud {
+public:
+	NoeudInstLire(Noeud* variable); // construit une affectation
+	~NoeudInstLire() {} // à cause du destructeur virtuel de la classe Noeud
+
+	int getValeur(); // évalue l'expression et affecte sa valeur à la variable
+	void afficher(unsigned short indentation = 0); // affiche l'affectation
+
+private:
+	Noeud *var;
+};
+
 #endif /* ARBRE_H_ */

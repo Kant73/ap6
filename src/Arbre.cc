@@ -93,3 +93,26 @@ void NoeudOperateurBinaire::afficher(unsigned short indentation)
 	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
 	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
 }
+
+
+
+NoeudInstLire::NoeudInstLire(Noeud* variable)
+{
+	var = variable;
+}
+
+
+int NoeudInstLire::getValeur()
+{
+	int entier;
+	cin >> entier;
+	((SymboleValue*)var)->setValeur(entier);
+	return 0;
+}
+
+
+void NoeudInstLire::afficher(unsigned short indentation)
+{
+
+}
+
