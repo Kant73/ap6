@@ -11,11 +11,13 @@ using namespace std;
 #define IS_OPADD(s)    ((s) == "+"  || (s) == "-")
 #define IS_OPMULT(s)   ((s) == "*"  || (s) == "/")
 
-LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {}
+LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {
+
+}
 
 void LecteurPhraseAvecArbre::analyse()
 {
-	programme();
+	arbre = programme();
 	cout << "Syntaxe correcte." << endl;
 }
 
@@ -320,8 +322,13 @@ Noeud* LecteurPhraseAvecArbre::instLire()
 {
 	sauterSymCour("lire");
 	sauterSymCour("(");
+	
+	Noeud* var = ts.chercheAjoute(ls.getSymCour());
+
 	sauterSymCour("<VARIABLE>");
 	sauterSymCour(")");
+
+	return new NoeudInstLire(var);
 }
 
 

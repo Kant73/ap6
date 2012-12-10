@@ -21,12 +21,7 @@ public:
 	
 	void setValeur(Valeur *val)
 	{ 
-		if (typeid(val) == typeid(ValeurEntiere))
-			this->val = new ValeurEntiere(((ValeurEntiere*)val)->getValeur());
-		else if (typeid(val) == typeid(ValeurReelle))
-			this->val = new ValeurReelle(((ValeurReelle*)val)->getValeur());
-		else if (typeid(val) == typeid(ValeurChaine))
-			this->val = new ValeurChaine(((ValeurChaine*)val)->getValeur());
+		this->val = val;
 		defini = true;
 	}
 	

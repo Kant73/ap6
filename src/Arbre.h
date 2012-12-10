@@ -18,8 +18,9 @@ using namespace std;
 class Noeud {
 public:
 	virtual Valeur* getValeur() = 0; // méthode pure (non implémentée) qui rend la classe abstraite
-	
-	virtual void afficher(unsigned short indentation = 0) { cout << setw(4 * indentation) << " "; }
+	virtual void afficher(unsigned short indentation = 0) {
+		cout << setw(4 * indentation) << " ";
+	}
 	// pour afficher un noeud avec un décalage (indentation) proportionnel à son niveau dans l'arbre
 
 	virtual ~Noeud() {} // présence d'un destructeur virtuel conseillée dans les classes abstraites
@@ -103,7 +104,7 @@ public:
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
 
 private:
-	Noeud *var;
+	Noeud *variable;
 };
 
 #endif /* ARBRE_H_ */

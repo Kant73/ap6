@@ -19,7 +19,14 @@ SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())
 void SymboleValue::afficher(unsigned short indentation)
 {
 	Noeud::afficher(indentation);
-	cout << "Feuille - Symbole value : " << getChaine() << endl; // on affiche la chaine du symbole
+
+	cout << "Feuille - Symbole value : ";
+	if (typeid(val) == typeid(ValeurEntiere))
+		this->val = new ValeurEntiere(((ValeurEntiere*)val)->getValeur());
+	else if (typeid(val) == typeid(ValeurReelle))
+		this->val = new ValeurReelle(((ValeurReelle*)val)->getValeur());
+	else if (typeid(val) == typeid(ValeurChaine))
+		this->val = new ValeurChaine(((ValeurChaine*)val)->getValeur());
 }
 
 
@@ -27,14 +34,16 @@ void SymboleValue::afficher(unsigned short indentation)
 ostream & operator <<(ostream & cout, SymboleValue symb)
 {
 	cout << (Symbole) symb << "\t\t - Valeur=";
+
 	if (symb.defini) {
-		if (typeid(symb.val)==typeid(ValeurEntiere))
+		if (typeid(*symb.val) == typeid(ValeurEntiere))
 			cout << ((ValeurEntiere*)symb.val)->getValeur() << endl;
-		else if (typeid(symb.val)==typeid(ValeurReelle))
+		else if (typeid(*symb.val) == typeid(ValeurReelle))
 			cout << ((ValeurReelle*)symb.val)->getValeur() << endl;
-		else if (typeid(symb.val)==typeid(ValeurChaine))
+		else if (typeid(*symb.val) == typeid(ValeurChaine))
 			cout << ((ValeurChaine*)symb.val)->getValeur() << endl;
-	} else
+	}else
 		cout << "indefinie ";
+
 	return cout;
 }

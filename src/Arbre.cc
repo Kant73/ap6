@@ -9,6 +9,7 @@ NoeudSeqInst::NoeudSeqInst() : tabInst() {}
 Valeur* NoeudSeqInst::getValeur() 
 {
 	Valeur *valeur = NULL;
+
 	for (unsigned int i = 0; i < tabInst.size(); i++)
 		valeur = tabInst[i]->getValeur();  // on evalue chaque instruction de la séquence
 	return valeur; // par convention, resultat = valeur de la derniere instruction
@@ -97,7 +98,7 @@ void NoeudOperateurBinaire::afficher(unsigned short indentation)
 
 NoeudInstLire::NoeudInstLire(Noeud* variable)
 {
-	var = variable;
+	this->variable = variable;
 }
 
 
@@ -108,13 +109,16 @@ Valeur* NoeudInstLire::getValeur()
 
 	cin >> str;
 	valeur = new ValeurChaine(str);
-	((SymboleValue*)var)->setValeur(valeur);
+	((SymboleValue*)variable)->setValeur(valeur);
+
 	return valeur;
 }
 
 void NoeudInstLire::afficher(unsigned short indentation)
 {
-
+	Noeud::afficher(indentation);
+	cout << "Noeud - Lire" << endl;
+	variable->afficher(indentation + 1);   // on affiche variable et expression
 }
 
 NoeudOperateurBool::NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit) 

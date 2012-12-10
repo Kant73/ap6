@@ -13,18 +13,18 @@ Symbole::Symbole(string s) {
 	else if (isdigit(s[0])) this->categorie=ENTIER;
         else if (isMotCle(s))   this->categorie=MOTCLE;
 	else if (isalpha(s[0])) this->categorie=VARIABLE;
-	else if (s[0]=='"') this->categorie=CHAINE;
+	else if (s[0]=='"')     this->categorie=CHAINE;
 	else                    this->categorie=INDEFINI;
 }
 
 
 bool Symbole::operator == (string ch) {
-	return  this->chaine==ch                                   ||
-	       (this->categorie==VARIABLE     && ch=="<VARIABLE>") ||
-	       (this->categorie==ENTIER       && ch=="<ENTIER>")   ||
-	       (this->categorie==INDEFINI     && ch=="<INDEFINI>") ||
-	       (this->categorie==FINDEFICHIER && ch=="<FINDEFICHIER>") ||
-	       (this->categorie==CHAINE && ch=="<CHAINE>");
+	return  this->chaine == ch                                   ||
+	       (this->categorie == VARIABLE     && ch == "<VARIABLE>") ||
+	       (this->categorie == ENTIER       && ch == "<ENTIER>")   ||
+	       (this->categorie == INDEFINI     && ch == "<INDEFINI>") ||
+	       (this->categorie == FINDEFICHIER && ch == "<FINDEFICHIER>") ||
+	       (this->categorie == CHAINE       && ch == "<CHAINE>");
 }
 
 
@@ -39,7 +39,7 @@ bool Symbole::isMotCle(string s) {
 			if (mot!="") { // insertion triée de s dans le vecteur des mots clés
   				vector<string>::iterator it = motsCles.begin();
   				while (it<motsCles.end() && *it < mot) it++;
-  				if (it==motsCles.end() || *it != mot) // si pas trouvé...
+  				if (it == motsCles.end() || *it != mot) // si pas trouvé...
     					motsCles.insert(it, mot);
 			}
 		}
@@ -48,19 +48,19 @@ bool Symbole::isMotCle(string s) {
  	// on recherche  s dans le vecteur des mots clés triés
 	unsigned int i;
 	for (i=0; i<motsCles.size() && motsCles[i]<s; i++) ;
-	return (i<motsCles.size() && motsCles[i]==s);
+	return (i<motsCles.size() && motsCles[i] == s);
 }
 
 
 // Attention : cette fonction (operator << ) n'est pas membre de la classe Symbole
 ostream & operator <<(ostream & cout, Symbole symb) {
 	cout << "Symbole de type ";
-	if      (symb.categorie==Symbole::MOTCLE)       cout << "<MOTCLE>      ";
-	else if (symb.categorie==Symbole::VARIABLE)     cout << "<VARIABLE>    ";
-	else if (symb.categorie==Symbole::ENTIER)       cout << "<ENTIER>      ";
-	else if (symb.categorie==Symbole::INDEFINI)     cout << "<INDEFINI>    ";
-	else if (symb.categorie==Symbole::FINDEFICHIER) cout << "<FINDEFICHIER>";
-	else if (symb.categorie==Symbole::CHAINE)		cout << "<CHAINE>      ";
+	if      (symb.categorie == Symbole::MOTCLE)       cout << "<MOTCLE>      ";
+	else if (symb.categorie == Symbole::VARIABLE)     cout << "<VARIABLE>    ";
+	else if (symb.categorie == Symbole::ENTIER)       cout << "<ENTIER>      ";
+	else if (symb.categorie == Symbole::INDEFINI)     cout << "<INDEFINI>    ";
+	else if (symb.categorie == Symbole::FINDEFICHIER) cout << "<FINDEFICHIER>";
+	else if (symb.categorie == Symbole::CHAINE)		cout << "<CHAINE>      ";
 	cout << " : \"" << symb.chaine << "\"" ;
 	return cout;
 }
