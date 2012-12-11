@@ -29,7 +29,7 @@ ostream & operator <<(ostream &cout, TableSymboles ts)
 	     <<         "=========================================" << endl << endl;
 
 	for (unsigned int i = 0; i < ts.table.size(); i++)
-		cout << "  " << *(ts.table[i]) << endl;
+		cout << "  " << *(ts.table[i]);
 
 	cout << endl;
 	return cout;

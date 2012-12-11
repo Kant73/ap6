@@ -20,7 +20,7 @@ int main(int argc, char* argv[])
 	cout << endl << "Arbre Abstrait : " << endl;
 	cout         << "================"  << endl;
 	lp.getArbre()->afficher();
-	cout << endl << "Table des symboles avant evaluation : " << lp.getTs();
+	cout << endl << endl << "Table des symboles avant evaluation : " << lp.getTs();
 	cout << endl << "Evaluation de l'arbre (interpretation)..." << endl;
 	lp.getArbre()->getValeur();
 	cout << endl << "Table des symboles apres evaluation : " << lp.getTs();

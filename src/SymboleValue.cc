@@ -34,7 +34,7 @@ void SymboleValue::afficher(unsigned short indentation)
 // Attention : cette fonction (operator) n'est pas membre de la classe SymboleValue
 ostream & operator <<(ostream & cout, SymboleValue symb)
 {
-	cout << (Symbole) symb << "\t\t - Valeur=";
+	cout << (Symbole) symb << "\t\t - Valeur = ";
 
 	if (symb.defini) {
 		if (typeid(*symb.val) == typeid(ValeurEntiere))
