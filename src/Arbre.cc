@@ -143,6 +143,8 @@ Valeur* NoeudInstEcrire::getValeur()
 		cout << ((ValeurChaine*)val)->getValeur() << endl;
 		return ((ValeurChaine*)val);
 	}
+
+	return NULL;
 }
 
 void NoeudInstEcrire::afficher(unsigned short indentation)
