@@ -1,6 +1,0 @@
-# commentaire
-debut
-  lire(i);
-  ecrire("lol");
-fin
-
