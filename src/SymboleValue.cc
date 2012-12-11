@@ -22,11 +22,11 @@ void SymboleValue::afficher(unsigned short indentation)
 
 	cout << "Feuille - Symbole value : ";
 	if (typeid(val) == typeid(ValeurEntiere))
-		this->val = new ValeurEntiere(((ValeurEntiere*)val)->getValeur());
+		cout << ((ValeurEntiere*)val)->getValeur() << endl;
 	else if (typeid(val) == typeid(ValeurReelle))
-		this->val = new ValeurReelle(((ValeurReelle*)val)->getValeur());
+		cout << ((ValeurReelle*)val)->getValeur() << endl;
 	else if (typeid(val) == typeid(ValeurChaine))
-		this->val = new ValeurChaine(((ValeurChaine*)val)->getValeur());
+		cout << ((ValeurChaine*)val)->getValeur() << endl;
 }
 
 

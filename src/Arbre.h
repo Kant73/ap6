@@ -107,4 +107,18 @@ private:
 	Noeud *variable;
 };
 
+
+// Noeud d'instruction Ecrire
+class NoeudInstEcrire : public Noeud {
+public:
+	NoeudInstEcrire(Noeud* exp); // construit une affectation
+	~NoeudInstEcrire() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
+	void afficher(unsigned short indentation = 0); // affiche l'affectation
+
+private:
+	Noeud *exp;
+};
+
 #endif /* ARBRE_H_ */

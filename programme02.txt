@@ -1,5 +1,6 @@
 # commentaire
 debut
   lire(i);
+  ecrire(23 + 2 * 5);
 fin
 

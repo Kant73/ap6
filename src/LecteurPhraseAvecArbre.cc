@@ -335,13 +335,19 @@ Noeud* LecteurPhraseAvecArbre::instLire()
 //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
 Noeud* LecteurPhraseAvecArbre::instEcrire()
 {
+	Noeud *ret = NULL;
+
 	sauterSymCour("ecrire");
 	sauterSymCour("(");
-	if (ls.getSymCour() == "<CHAINE>")
+	if (ls.getSymCour() == "<CHAINE>") {
+		ret = ts.chercheAjoute(ls.getSymCour());
 		ls.suivant();
-	else
-		expression();
+	} else {
+		ret = expression();
+	}
 	sauterSymCour(")");
+
+	return new NoeudInstEcrire(ret);
 }
 
 // LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {}

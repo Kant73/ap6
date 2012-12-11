@@ -108,6 +108,7 @@ Valeur* NoeudInstLire::getValeur()
 	Valeur *valeur = NULL;
 
 	cin >> str;
+	
 	valeur = new ValeurChaine(str);
 	((SymboleValue*)variable)->setValeur(valeur);
 
@@ -119,6 +120,36 @@ void NoeudInstLire::afficher(unsigned short indentation)
 	Noeud::afficher(indentation);
 	cout << "Noeud - Lire" << endl;
 	variable->afficher(indentation + 1);   // on affiche variable et expression
+}
+
+
+NoeudInstEcrire::NoeudInstEcrire(Noeud* exp)
+{
+	this->exp = exp;
+}
+
+
+Valeur* NoeudInstEcrire::getValeur()
+{
+	Valeur *val = ((SymboleValue*)exp)->getValeur();
+
+	if (typeid(*val) == typeid(ValeurEntiere)) {
+		cout << ((ValeurEntiere*)val)->getValeur() << endl;
+		return ((ValeurEntiere*)val);
+	} else if (typeid(*val) == typeid(ValeurReelle)) {
+		cout << ((ValeurReelle*)val)->getValeur() << endl;
+		return ((ValeurReelle*)val);
+	} else if (typeid(*val) == typeid(ValeurChaine)) {
+		cout << ((ValeurChaine*)val)->getValeur() << endl;
+		return ((ValeurChaine*)val);
+	}
+}
+
+void NoeudInstEcrire::afficher(unsigned short indentation)
+{
+	cout << "Noeud - Ecrire" << endl;
+	Noeud::afficher(indentation);
+	exp->afficher(indentation + 1);   // on affiche exp et expression
 }
 
 NoeudOperateurBool::NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit) 
