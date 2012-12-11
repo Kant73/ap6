@@ -1,3 +1,5 @@
+class Valeur;
+
 #ifndef SYMBOLEVALUE_H
 #define SYMBOLEVALUE_H
 
@@ -5,14 +7,11 @@
 #include <iostream>
 using namespace std;
 
-#include "Valeur.h"
 #include "Symbole.h"
 #include "Arbre.h"
 
 
-class SymboleValue : public Symbole,  // un symbole valué est un symbole qui a une valeur, définie ou pas
-                     public Noeud     // et c'est aussi une feuille de l'arbre abstrait
-{
+class SymboleValue : public Noeud, public Symbole {
 public:
 	SymboleValue(Symbole s); // construit un symbole valué à partir d'un symbole existant s
 	~SymboleValue() {}

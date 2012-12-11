@@ -46,7 +46,7 @@ endef
 
 $(foreach b,$(BINS),$(eval $(call BIN_template,$(b))))
 $(foreach s,$(sort $(ALL_SRCS)),$(eval $(call COMP_template,$(s))))
+
 .PHONY: all clean $(ALL_CLEANS)
 clean: $(ALL_CLEANS)
 	$(foreach d,$(sort $(dir $(addprefix $(BUILDDIR)/,$(ALL_SRCS)))),$(shell rmdir -p $(d) 2> /dev/null))
-

@@ -1,6 +1,7 @@
+#include <stdlib.h>
+
 #include "SymboleValue.h"
 #include "Valeur.h"
-#include <stdlib.h>
 
 
 SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())

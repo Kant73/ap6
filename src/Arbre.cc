@@ -2,6 +2,7 @@
 #include "Arbre.h"
 #include "Symbole.h"
 #include "SymboleValue.h"
+#include "Valeur.h"
 
 NoeudSeqInst::NoeudSeqInst() : tabInst() {}
 
@@ -181,4 +182,3 @@ void NoeudOperateurBool::afficher(unsigned short indentation)
 	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
 	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
 }
-

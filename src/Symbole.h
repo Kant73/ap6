@@ -1,3 +1,5 @@
+class Symbole;
+
 #ifndef SYMBOLE_H_
 #define SYMBOLE_H_
 

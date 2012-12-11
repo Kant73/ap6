@@ -1,3 +1,5 @@
+class Valeur;
+
 /*
  * Spécification des noeuds l'arbre abstrait
  */
@@ -10,8 +12,6 @@
 using namespace std;
 
 #include "Symbole.h"
-#include "Valeur.h"
-
 
 // classe abstraite dont dériveront toutes les classes servant à représenter l'arbre abstrait
 // Remarque : la classe ne contient aucun constructeur
@@ -97,11 +97,11 @@ private:
 // Noeud d'instruction Lire
 class NoeudInstLire : public Noeud {
 public:
-	NoeudInstLire(Noeud* variable); // construit une affectation
-	~NoeudInstLire() {} // à cause du destructeur virtuel de la classe Noeud
+	NoeudInstLire(Noeud* variable);
+	~NoeudInstLire() {}
 
-	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
-	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	Valeur* getValeur();
+	void afficher(unsigned short indentation = 0);
 
 private:
 	Noeud *variable;
