@@ -18,7 +18,12 @@ public:
 	void    afficher (unsigned short indentation = 0); // affiche le symbole en tant que noeud de l'arbre
 	Valeur* getValeur() { return val; }
 	
-	void setValeur(Valeur *val);
+	void setValeur(Valeur *val)
+	{ 
+		this->val = val;
+		defini = true;
+	}
+	
 	inline bool estDefini()              { return defini; }
 	
 	friend ostream & operator << (ostream & cout, SymboleValue symb); // affiche un symbole value sur cout

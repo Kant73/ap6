@@ -1,6 +1,5 @@
 # commentaire
 debut
-  i="salut";
-  i= (2 == 2);
+  lire(i);
 fin
 

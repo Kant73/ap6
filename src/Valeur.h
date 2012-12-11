@@ -10,39 +10,39 @@ using namespace std;
 
 
 class Valeur {
-	public:
-		virtual ~Valeur() {};
+public:
+	virtual ~Valeur() {};
 };
 
 
 class ValeurEntiere : public Valeur {
-	public:
-		ValeurEntiere(int val=0) {
+public:
+	ValeurEntiere(int val = 0) {
 		this->val=val;
-		}
-		int getValeur() { return val; }
-	private:
-		int val;
+	}
+	int getValeur() { return val; }
+private:
+	int val;
 };
 
 
 class ValeurReelle : public Valeur {
-	public:
-		ValeurReelle(float val=0.0) {this->val=val;}
-		float getValeur() { return val; }
-		private:
-		float val;
+public:
+	ValeurReelle(float val=0.0) {this->val=val;}
+	float getValeur() { return val; }
+private:
+	float val;
 };
 
 
 class ValeurChaine : public Valeur {
-	public:
-		ValeurChaine(string val="") {
+public:
+	ValeurChaine(string val="") {
 		this->val=val;
-		}
-		string getValeur() { return val; }
-	private:
-		string val;
+	}
+	string getValeur() { return val; }
+private:
+	string val;
 };
 
 

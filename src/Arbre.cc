@@ -10,6 +10,7 @@ NoeudSeqInst::NoeudSeqInst() : tabInst() {}
 Valeur* NoeudSeqInst::getValeur() 
 {
 	Valeur *valeur = NULL;
+
 	for (unsigned int i = 0; i < tabInst.size(); i++)
 		valeur = tabInst[i]->getValeur();  // on evalue chaque instruction de la séquence
 	return valeur; // par convention, resultat = valeur de la derniere instruction
@@ -96,6 +97,31 @@ void NoeudOperateurBinaire::afficher(unsigned short indentation)
 }
 
 
+NoeudInstLire::NoeudInstLire(Noeud* variable)
+{
+	this->variable = variable;
+}
+
+
+Valeur* NoeudInstLire::getValeur()
+{
+	string str;
+	Valeur *valeur = NULL;
+
+	cin >> str;
+	valeur = new ValeurChaine(str);
+	((SymboleValue*)variable)->setValeur(valeur);
+
+	return valeur;
+}
+
+void NoeudInstLire::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - Lire" << endl;
+	variable->afficher(indentation + 1);   // on affiche variable et expression
+}
+
 NoeudOperateurBool::NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit) 
 {
 	this->operateur = operateur;
@@ -122,29 +148,4 @@ void NoeudOperateurBool::afficher(unsigned short indentation)
 	cout << "Noeud - Operateur Booleen \"" << this->operateur.getChaine() << "\" applique a : " << endl;
 	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
 	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
-}
-
-
-NoeudInstLire::NoeudInstLire(Noeud *variable)
-{
-	// TODO: put more checks
-	var = variable;
-}
-
-
-Valeur* NoeudInstLire::getValeur()
-{
-	string str;
-	Valeur *val;
-	cin >> str;
-	val = new ValeurChaine(str);
-
-	((SymboleValue*)var)->setValeur(val);
-	return val;
-}
-
-
-void NoeudInstLire::afficher(unsigned short indentation)
-{
-
 }
