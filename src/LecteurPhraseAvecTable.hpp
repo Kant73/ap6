@@ -1,8 +1,8 @@
 #ifndef LECTEURPHRASEAVECTABLE_H_
 #define LECTEURPHRASEAVECTABLE_H_
 
-#include "LecteurSymbole.h"
-#include "TableSymboles.h"
+#include "LecteurSymbole.hpp"
+#include "TableSymboles.hpp"
 #include <string>
 using namespace std;
 

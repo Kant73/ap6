@@ -7,8 +7,8 @@ class Valeur;
 #include <iostream>
 using namespace std;
 
-#include "Symbole.h"
-#include "Arbre.h"
+#include "Symbole.hpp"
+#include "Arbre.hpp"
 
 
 class SymboleValue : public Noeud, public Symbole {

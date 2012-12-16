@@ -1,7 +1,7 @@
 #ifndef LECTEURPHRASESIMPLE_H_
 #define LECTEURPHRASESIMPLE_H_
 
-#include "LecteurSymbole.h"
+#include "LecteurSymbole.hpp"
 
 class LecteurPhraseSimple {
 public:

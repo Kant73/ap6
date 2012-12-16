@@ -1,7 +1,7 @@
 #ifndef TABLESYMBOLES_H_
 #define TABLESYMBOLES_H_
 
-#include "SymboleValue.h"
+#include "SymboleValue.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;

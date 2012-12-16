@@ -11,7 +11,7 @@ class Valeur;
 #include <iomanip>
 using namespace std;
 
-#include "Symbole.h"
+#include "Symbole.hpp"
 
 // classe abstraite dont dériveront toutes les classes servant à représenter l'arbre abstrait
 // Remarque : la classe ne contient aucun constructeur

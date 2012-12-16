@@ -5,8 +5,8 @@
 #include <string>
 using namespace std;
 
-#include "LecteurCaractere.h"
-#include "Symbole.h"
+#include "LecteurCaractere.hpp"
+#include "Symbole.hpp"
 
 class LecteurSymbole {
 public:

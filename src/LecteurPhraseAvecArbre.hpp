@@ -1,10 +1,10 @@
 #ifndef LECTEURPHRASEAVECARBRE_H_
 #define LECTEURPHRASEAVECARBRE_H_
 
-#include "Symbole.h"
-#include "LecteurSymbole.h"
-#include "TableSymboles.h"
-#include "Arbre.h"
+#include "Symbole.hpp"
+#include "LecteurSymbole.hpp"
+#include "TableSymboles.hpp"
+#include "Arbre.hpp"
 
 #include <string>
 using namespace std;
