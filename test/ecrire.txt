@@ -1,0 +1,6 @@
+debut
+	ecrire("Le premier écrire");
+	i = 2;
+	ecrire(2 + 1);
+	ecrire(i);
+fin

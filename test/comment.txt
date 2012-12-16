@@ -1,0 +1,9 @@
+# Comment taire
+#Commenttaire # Same # #
+  # Saut de ligne
+debut # Commentaire
+      # Commentaire de début de programme
+      i = 3; # Autre commentaire
+      # i = 4;
+fin #test
+#FIN#
