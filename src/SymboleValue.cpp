@@ -43,7 +43,7 @@ ostream & operator <<(ostream & cout, SymboleValue symb)
 			cout << ((ValeurReelle*)symb.val)->getValeur() << endl;
 		else if (typeid(*symb.val) == typeid(ValeurChaine))
 			cout << ((ValeurChaine*)symb.val)->getValeur() << endl;
-	}else
+	} else
 		cout << "indefinie ";
 
 	return cout;

@@ -11,9 +11,7 @@ using namespace std;
 #define IS_OPADD(s)    ((s) == "+"  || (s) == "-")
 #define IS_OPMULT(s)   ((s) == "*"  || (s) == "/")
 
-LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {
-
-}
+LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {}
 
 void LecteurPhraseAvecArbre::analyse()
 {
@@ -25,7 +23,6 @@ void LecteurPhraseAvecArbre::analyse()
 // <programme> ::= debut <seqInst> fin FIN_FICHIER
 Noeud* LecteurPhraseAvecArbre::programme()
 {
-	
 	sauterSymCour("debut");
 	Noeud *si = seqInst();
 	sauterSymCour("fin");
@@ -350,6 +347,35 @@ Noeud* LecteurPhraseAvecArbre::instEcrire()
 	return new NoeudInstEcrire(ret);
 }
 
+
+void LecteurPhraseAvecArbre::testerSymCour(string ch)
+{
+	if (ls.getSymCour() != ch) {
+		cout << endl << "-------- Erreur ligne " << ls.getLigne()
+		     << " - Colonne " << ls.getColonne() << endl << "   Attendu : "
+		     << ch << endl << "   Trouve  : " << ls.getSymCour() << endl
+		     << endl;
+		exit(0); // plus tard, on levera une exception
+	}
+}
+
+
+void LecteurPhraseAvecArbre::sauterSymCour(string ch)
+{
+	testerSymCour(ch);
+	ls.suivant();
+}
+
+
+void LecteurPhraseAvecArbre::erreur(string mess)
+{
+	cout << endl << "-------- Erreur ligne " << ls.getLigne() << " - Colonne "
+	     << ls.getColonne() << endl << "   Attendu : " << mess << endl
+	     << "   Trouve  : " << ls.getSymCour() << endl << endl;
+	exit(0); // plus tard, on levera une exception
+}
+
+
 // LecteurPhraseAvecArbre::LecteurPhraseAvecArbre(string nomFich) : ls(nomFich), ts() {}
 
 
@@ -458,31 +484,3 @@ Noeud* LecteurPhraseAvecArbre::instEcrire()
 
 // 	return operateur;
 // }
-
-
-void LecteurPhraseAvecArbre::testerSymCour(string ch)
-{
-	if (ls.getSymCour() != ch) {
-		cout << endl << "-------- Erreur ligne " << ls.getLigne()
-		     << " - Colonne " << ls.getColonne() << endl << "   Attendu : "
-		     << ch << endl << "   Trouve  : " << ls.getSymCour() << endl
-		     << endl;
-		exit(0); // plus tard, on levera une exception
-	}
-}
-
-
-void LecteurPhraseAvecArbre::sauterSymCour(string ch)
-{
-	testerSymCour(ch);
-	ls.suivant();
-}
-
-
-void LecteurPhraseAvecArbre::erreur(string mess)
-{
-	cout << endl << "-------- Erreur ligne " << ls.getLigne() << " - Colonne "
-	     << ls.getColonne() << endl << "   Attendu : " << mess << endl
-	     << "   Trouve  : " << ls.getSymCour() << endl << endl;
-	exit(0); // plus tard, on levera une exception
-}

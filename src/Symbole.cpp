@@ -8,7 +8,7 @@ using namespace std;
 
 Symbole::Symbole(string s) {
 	// attention : l'ordre des tests ci-dessous n'est pas innocent !
-	if      (s=="")         this->categorie = FINDEFICHIER;
+	if      (s == "")         this->categorie = FINDEFICHIER;
 	else if (isdigit(s[0])) this->categorie = ENTIER;
         else if (isMotCle(s))   this->categorie = MOTCLE;
 	else if (isalpha(s[0])) this->categorie = VARIABLE;
@@ -41,7 +41,7 @@ bool Symbole::isMotCle(string s) {
 		while (!fichier.eof()) {
 			string mot;
 			getline(fichier, mot);
-			if (mot!="") { // insertion triée de s dans le vecteur des mots clés
+			if (mot != "") { // insertion triée de s dans le vecteur des mots clés
   				vector<string>::iterator it = motsCles.begin();
   				while (it<motsCles.end() && *it < mot) it++;
   				if (it == motsCles.end() || *it != mot) // si pas trouvé...
@@ -50,10 +50,11 @@ bool Symbole::isMotCle(string s) {
 		}
 		fichier.close();
 	}
- 	// on recherche  s dans le vecteur des mots clés triés
+
+ 	// on recherche s dans le vecteur des mots clés triés
 	unsigned int i;
-	for (i=0; i<motsCles.size() && motsCles[i]<s; i++) ;
-	return (i<motsCles.size() && motsCles[i] == s);
+	for (i = 0; i < motsCles.size() && motsCles[i] < s; i++) ;
+	return (i < motsCles.size() && motsCles[i] == s);
 }
 
 

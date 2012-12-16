@@ -28,7 +28,7 @@ private:
 
 class ValeurReelle : public Valeur {
 public:
-	ValeurReelle(float val=0.0) {this->val=val;}
+	ValeurReelle(float val = 0.0) { this->val = val; }
 	float getValeur() { return val; }
 private:
 	float val;
@@ -37,14 +37,10 @@ private:
 
 class ValeurChaine : public Valeur {
 public:
-	ValeurChaine(string val="") {
-		this->val=val;
-	}
+	ValeurChaine(string val = "") { this->val = val; }
 	string getValeur() { return val; }
 private:
 	string val;
 };
 
-
 #endif	/* VALEUR_H */
-

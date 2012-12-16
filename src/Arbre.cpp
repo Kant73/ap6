@@ -169,6 +169,7 @@ Valeur* NoeudOperateurBool::getValeur()
 	int og = ((ValeurEntiere*)operandeGauche->getValeur())->getValeur();
 	int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
 
+	/* Les valeures booleene sont des entier, comme en C */
 	if      (this->operateur == "ou") valeur = new ValeurEntiere(og || od); 
 	else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
 	return valeur;
