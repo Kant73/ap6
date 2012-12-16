@@ -75,6 +75,8 @@ Valeur* NoeudOperateurBinaire::getValeur()
 	if      (this->operateur == "+") valeur = new ValeurEntiere(og + od); 
 	else if (this->operateur == "-") valeur = new ValeurEntiere(og - od);
 	else if (this->operateur == "*") valeur = new ValeurEntiere(og * od); 
+	else if (this->operateur == "et") valeur = new ValeurEntiere(og && od); 
+	else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od); 
 	else  /* this->operateur == "/" */ {
 		if (od != 0)
 			valeur = new ValeurEntiere(og / od);
@@ -153,33 +155,4 @@ void NoeudInstEcrire::afficher(unsigned short indentation)
 	cout << "Noeud - Ecrire" << endl;
 	Noeud::afficher(indentation);
 	exp->afficher(indentation + 1);   // on affiche exp et expression
-}
-
-NoeudOperateurBool::NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit) 
-{
-	this->operateur = operateur;
-	this->operandeGauche = operandeGauche;
-	this->operandeDroit = operandeDroit;
-}
-
-
-Valeur* NoeudOperateurBool::getValeur() 
-{ 
-	Valeur *valeur = NULL;
-	int og = ((ValeurEntiere*)operandeGauche->getValeur())->getValeur();
-	int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
-
-	/* Les valeures booleene sont des entier, comme en C */
-	if      (this->operateur == "ou") valeur = new ValeurEntiere(og || od); 
-	else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
-	return valeur;
-}
-
-
-void NoeudOperateurBool::afficher(unsigned short indentation) 
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Operateur Booleen \"" << this->operateur.getChaine() << "\" applique a : " << endl;
-	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
-	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
 }

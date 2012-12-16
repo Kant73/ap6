@@ -77,23 +77,6 @@ private:
 };
 
 
-// classe pour représenter un noeud "expBool"
-// composé d'un opérateur (ou et) et de 2 fils : l'opérande gauche et l'opérande droit
-class NoeudOperateurBool : public Noeud {
-public:
-	NoeudOperateurBool(Symbole operateur, Noeud* operandeGauche, Noeud* operandeDroit);
-	~NoeudOperateurBool() {} // à cause du destructeur virtuel de la classe Noeud
-
-	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur (0 pour faux et 1 pour vrai)
-	void afficher(unsigned short indentation = 0); // affiche l'opération
-
-private:
-	Symbole operateur;
-	Noeud*  operandeGauche;
-	Noeud*  operandeDroit;
-};
-
-
 // Noeud d'instruction Lire
 class NoeudInstLire : public Noeud {
 public:
