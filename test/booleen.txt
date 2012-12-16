@@ -1,0 +1,18 @@
+debut
+	i = (1 et 1);
+	j = (1 et 0);
+	k = (1 et 0 et 1 et 1);
+
+	l = (0 ou 0);
+	m = (1 ou 0);
+	n = (0 ou 0 ou 0 ou 1 ou 0);
+
+	# o = 1 si la priorité est respéctée
+	o = (1 ou 0 et 1 ou 0);
+
+	p = (non 1);
+	p = (non p);
+
+	q = (1 == 0);
+	r = (1 < 0);
+fin
