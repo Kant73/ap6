@@ -38,17 +38,19 @@ private:
 	Noeud* instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
 	Noeud* affectation(); // <affectation> ::= <variable> = <expression>
 	Noeud* expression();  //  <expression> ::= <terme> { <opAdd> <terme> }
-	Noeud* facteur();     //     <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
 	Noeud* terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
+	Noeud* facteur();     //     <facteur> ::= [ <opNegatif> ] <entier> | <chaine> | <variable> | ( <expBool> )
 	Symbole opAdd();      //       <opAdd> ::= + | -
 	Symbole opMult();     //      <opMult> ::= * | /
+	Symbole opNegatif();  //   <opNegatif> ::= -
 	Noeud* expBool();     //     <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
-	Noeud* expBoolEt();   //   <expBoolEt> ::= <relation> { <opBoolEt> <relation> }
+	Noeud* expBoolEt();   //   <expBoolEt> ::= <expBoolNon> { <opBoolEt> <expBoolNon> }
+	Noeud* expBoolNon();  //  <expBoolNon> ::= [ <opBoolNon> ] <relation>
 	Symbole opBoolOu();   //    <opBoolOu> ::= ou
 	Symbole opBoolEt();   //    <opBoolEt> ::= et
+	Symbole opBoolNon();  //   <opBoolNon> ::= non
 	Noeud* relation();    //    <relation> ::= <expression> { <opRel> <expression> }
 	Symbole opRel();      //       <opRel> ::= == | != | < | <= | > | >= 
-	Symbole opUnaire();   //    <opUnaire> ::= - | non
 	Noeud* instLire();    //    <instLire> ::= lire ( <variable> )
 	Noeud* instEcrire();  //  <instEcrire> ::= ecrire ( <expression> | <chaine> )
 

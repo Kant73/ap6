@@ -72,18 +72,27 @@ Valeur* NoeudOperateurBinaire::getValeur()
 	int og = ((ValeurEntiere*)operandeGauche->getValeur())->getValeur();
 	int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
 
-	if      (this->operateur == "+") valeur = new ValeurEntiere(og + od); 
-	else if (this->operateur == "-") valeur = new ValeurEntiere(og - od);
-	else if (this->operateur == "*") valeur = new ValeurEntiere(og * od); 
-	else if (this->operateur == "et") valeur = new ValeurEntiere(og && od); 
-	else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od); 
-	else  /* this->operateur == "/" */ {
+	if      (this->operateur == "+")   valeur = new ValeurEntiere(og + od); 
+	else if (this->operateur == "-")   valeur = new ValeurEntiere(og - od);
+	else if (this->operateur == "*")   valeur = new ValeurEntiere(og * od); 
+	else if (this->operateur == "et")  valeur = new ValeurEntiere(og && od); 
+	else if (this->operateur == "ou")  valeur = new ValeurEntiere(og || od); 
+	else if (this->operateur == "==")  valeur = new ValeurEntiere(og == od); 
+	else if (this->operateur == "!=")  valeur = new ValeurEntiere(og != od); 
+	else if (this->operateur == "<")   valeur = new ValeurEntiere(og < od); 
+	else if (this->operateur == "<=")  valeur = new ValeurEntiere(og <= od); 
+	else if (this->operateur == ">")   valeur = new ValeurEntiere(og > od); 
+	else if (this->operateur == ">=")  valeur = new ValeurEntiere(og >= od); 
+	else if (this->operateur == "/") {
 		if (od != 0)
 			valeur = new ValeurEntiere(og / od);
 		else {
 			cout << "Erreur pendant l'interpretation : division par zero" << endl;
 			exit(0); // plus tard on levera une exception
 		}
+	} else {
+		cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+		exit(0); // plus tard on levera une exception
 	}
 
 	return valeur;
@@ -96,6 +105,37 @@ void NoeudOperateurBinaire::afficher(unsigned short indentation)
 	cout << "Noeud - Operateur Binaire \"" << this->operateur.getChaine() << "\" applique a : " << endl;
 	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
 	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
+}
+
+
+NoeudOperateurUnaire::NoeudOperateurUnaire(Symbole operateur, Noeud* operande) 
+{
+	this->operateur = operateur;
+	this->operande = operande;
+}
+
+
+Valeur* NoeudOperateurUnaire::getValeur() 
+{ 
+	Valeur *valeur = NULL;
+	int o = ((ValeurEntiere*)operande->getValeur())->getValeur();
+
+	if      (this->operateur == "non") valeur = new ValeurEntiere(!o); 
+	else if (this->operateur == "-")   valeur = new ValeurEntiere(-o); 
+	else {
+		cout << "Opérateur unaire indéfinit : " << this->operateur << endl;
+		exit(0); // plus tard on levera une exception
+	}
+
+	return valeur;
+}
+
+
+void NoeudOperateurUnaire::afficher(unsigned short indentation) 
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - Operateur Unaire \"" << this->operateur.getChaine() << "\" applique a : " << endl;
+	operande->afficher(indentation + 1);
 }
 
 

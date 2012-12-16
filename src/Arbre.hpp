@@ -77,6 +77,21 @@ private:
 };
 
 
+class NoeudOperateurUnaire : public Noeud {
+public:
+	// construit une opération binaire : operandeGauche operateur OperandeDroit
+	NoeudOperateurUnaire(Symbole operateur, Noeud* operande);
+	~NoeudOperateurUnaire() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur
+	void afficher(unsigned short indentation = 0); // affiche l'opération
+
+private:
+	Symbole operateur;
+	Noeud*  operande;
+};
+
+
 // Noeud d'instruction Lire
 class NoeudInstLire : public Noeud {
 public:

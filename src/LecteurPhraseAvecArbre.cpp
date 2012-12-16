@@ -7,7 +7,6 @@ using namespace std;
 // Permet de tester le type d'un opérateur
 #define IS_OPBOOL(s)   ((s) == "et" || (s) == "ou")
 #define IS_OPREL(s)    ((s) == "==" || (s) == "!=" || (s) == "<" || (s) == ">" || (s) == "<=" || (s) == ">=")
-#define IS_OPUNAIRE(s) ((s) == "-"  || (s) == "non")
 #define IS_OPADD(s)    ((s) == "+"  || (s) == "-")
 #define IS_OPMULT(s)   ((s) == "*"  || (s) == "/")
 
@@ -172,23 +171,29 @@ Noeud* LecteurPhraseAvecArbre::terme()
 }
 
 
-// <facteur> ::= <entier> | <variable> | <opUnaire> <expBool> | ( <expBool> )
+// <facteur> ::= [ <opNegatif> ] <entier> | <chaine> | <variable> | ( <expBool> )
 Noeud* LecteurPhraseAvecArbre::facteur()
 {
 	Noeud *fact = NULL;
 	
-	if (ls.getSymCour() == "<VARIABLE>" || ls.getSymCour() == "<ENTIER>" || ls.getSymCour() == "<CHAINE>") {
-		fact = ts.chercheAjoute(ls.getSymCour());
-		ls.suivant();
-	} else if (IS_OPUNAIRE(ls.getSymCour())) {
-		ls.suivant();
-		fact = expBool();
-	} else if (ls.getSymCour() == "(") {
-		ls.suivant();
-		fact = expBool();
-		sauterSymCour(")");
-	} else
-		erreur("<facteur>");
+	if (ls.getSymCour() == "-") {
+		Symbole op = opNegatif();
+		if (ls.getSymCour() == "<ENTIER>") {
+			fact = new NoeudOperateurUnaire(op, ts.chercheAjoute(ls.getSymCour()));
+			ls.suivant();
+		} else
+			erreur("<facteur>");
+	} else {
+		if (ls.getSymCour() == "<VARIABLE>" || ls.getSymCour() == "<ENTIER>" || ls.getSymCour() == "<CHAINE>") {
+			fact = ts.chercheAjoute(ls.getSymCour());
+			ls.suivant();
+		} else if (ls.getSymCour() == "(") {
+			ls.suivant();
+			fact = expBool();
+			sauterSymCour(")");
+		} else
+			erreur("<facteur>");
+	}
 
 	return fact;
 }
@@ -221,26 +226,47 @@ Symbole LecteurPhraseAvecArbre::opMult()
 	return op;
 }
 
+//   <opNegatif> ::= -
+Symbole LecteurPhraseAvecArbre::opNegatif()
+{
+	Symbole op;
+
+	if (ls.getSymCour() == "-") {
+		op = ls.getSymCour();
+		ls.suivant();
+	} else
+		erreur("<opNegatif>");
+
+	return op;
+}
 
 //<expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
 Noeud* LecteurPhraseAvecArbre::expBool()
 {
-	expBoolEt();
-	while (ls.getSymCour() == "ou") {
-		opBoolOu();
-		expBoolEt();
-	}
+	Noeud *exp = expBoolEt();
+	while (ls.getSymCour() == "ou")
+		exp = new NoeudOperateurBinaire(opBoolOu(), exp, expBoolEt());
+	return exp;
 }
 
 
-//<expBoolEt> ::= <relation> { <opBoolEt> <relation> }
+//<expBoolEt> ::= <expBoolNon> { <opBoolEt> <expBoolNon> }
 Noeud* LecteurPhraseAvecArbre::expBoolEt()
 {
-	relation();
-	while ((ls.getSymCour() == "et")) {
-		opBoolEt();
-		relation();
-	}
+	Noeud *exp = expBoolNon();
+	while (ls.getSymCour() == "et")
+		exp = new NoeudOperateurBinaire(opBoolEt(), exp, expBoolNon());
+	return exp;
+}
+
+
+//<expBoolNon> ::= [ <opBoolNon> ] <relation>
+Noeud* LecteurPhraseAvecArbre::expBoolNon()
+{
+	if (ls.getSymCour() == "non")
+		return new NoeudOperateurUnaire(opBoolNon(), relation());
+	else
+		return relation();
 }
 
 
@@ -272,15 +298,28 @@ Symbole LecteurPhraseAvecArbre::opBoolEt()
 	return op;
 }
 
+//<opBoolEt> ::= et
+Symbole LecteurPhraseAvecArbre::opBoolNon()
+{
+	Symbole op;
+
+	if (ls.getSymCour() == "non") {
+		op = ls.getSymCour();
+		ls.suivant();
+	} else
+		erreur("<opBoolNon>");
+
+	return op;
+}
+
 
 //    <relation> ::= <expression> { <opRel> <expression> }
 Noeud* LecteurPhraseAvecArbre::relation()
 {
-	expression();
-	while (IS_OPREL(ls.getSymCour())) {
-		opRel();
-		expression();
-	}
+	Noeud *exp = expression();
+	while (IS_OPREL(ls.getSymCour()))
+		exp = new NoeudOperateurBinaire(opRel(), exp, expression());
+	return exp;
 }
 
 
@@ -294,21 +333,6 @@ Symbole LecteurPhraseAvecArbre::opRel()
 		ls.suivant();
 	} else
 		erreur("<opRel>");
-
-	return op;
-}
-
-
-//    <opUnaire> ::= - | non
-Symbole LecteurPhraseAvecArbre::opUnaire()
-{
-	Symbole op;
-
-	if (IS_OPUNAIRE(ls.getSymCour())) {
-		op = ls.getSymCour();
-		ls.suivant();
-	} else
-		erreur("<opUnaire>");
 
 	return op;
 }
