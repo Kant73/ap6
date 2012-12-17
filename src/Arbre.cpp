@@ -244,6 +244,39 @@ void NoeudInstSi::afficher(unsigned short indentation)
 }
 
 
+NoeudInstSwitch::NoeudInstSwitch() : tabSi()
+{
+	
+}
+
+Valeur* NoeudInstSwitch::getValeur()
+{
+	Valeur* valeur = NULL;
+
+	for (unsigned int i = 0; i < tabSi.size() && valeur == NULL; i++)
+		if (((ValeurEntiere*)(tabSi[i].first->getValeur()))->getValeur())
+			valeur = tabSi[i].second->getValeur();
+	
+	return valeur;
+}
+
+void NoeudInstSwitch::ajouteCase(Noeud* condition, Noeud* seqInst)
+{
+	tabSi.push_back(make_pair(condition, seqInst));
+}
+
+void NoeudInstSwitch::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - InstSwitch" << endl;
+
+	for (unsigned int i = 0; i < tabSi.size(); i++) {
+		tabSi[i].first->afficher(indentation + 1);
+		tabSi[i].second->afficher(indentation + 1);
+	}
+}
+
+
 NoeudInstRepeter::NoeudInstRepeter(Noeud* exp, Noeud *seqInst)
 {
 	this->exp = exp;

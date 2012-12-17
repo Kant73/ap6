@@ -44,7 +44,9 @@ Noeud* LecteurPhraseAvecArbre::seqInst()
 		 ls.getSymCour() != "sinon" &&
 		 ls.getSymCour() != "fintantque" &&
 		 ls.getSymCour() != "jusqua" &&
-		 ls.getSymCour() != "finpour");
+		 ls.getSymCour() != "finpour" &&
+		 ls.getSymCour() != "case" &&
+		 ls.getSymCour() != "finswitch");
 	return si;
 }
 
@@ -54,6 +56,8 @@ Noeud* LecteurPhraseAvecArbre::inst()
 {
 	if (ls.getSymCour() == "si")
 		return instSi();
+	else if (ls.getSymCour() == "switch")
+		return instSwitch();
 	else if (ls.getSymCour() == "tantque")
 		return instTq();
 	else if (ls.getSymCour() == "repeter")
@@ -96,7 +100,27 @@ Noeud* LecteurPhraseAvecArbre::instSi()
 	sauterSymCour("finsi");
 	return instSi;
 }
-
+//<instSwitch> ::= switch ( <variable> ) { case <expression>: <seqInst> break; } finswitch
+Noeud* LecteurPhraseAvecArbre::instSwitch()
+{
+	NoeudInstSwitch *instSwitch = new NoeudInstSwitch();
+	Noeud* exp;
+	sauterSymCour("switch");
+	sauterSymCour("(");
+	Noeud* var = ts.chercheAjoute(ls.getSymCour());
+	ls.suivant();
+	sauterSymCour(")");
+	while(ls.getSymCour() == "case")
+	{
+		sauterSymCour("case");
+		exp = new NoeudOperateurBinaire(Symbole("=="),var,ts.chercheAjoute(ls.getSymCour()));
+		ls.suivant();
+		sauterSymCour(":");
+		instSwitch->ajouteCase(exp, seqInst());
+	}
+	sauterSymCour("finswitch");
+	return instSwitch;
+}
 
 //<instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
 Noeud* LecteurPhraseAvecArbre::instTq()
