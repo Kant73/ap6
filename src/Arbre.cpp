@@ -43,7 +43,13 @@ NoeudAffectation::NoeudAffectation(Noeud* variable, Noeud* expression)
 Valeur* NoeudAffectation::getValeur() 
 {
 	Valeur *valeur = expression->getValeur(); // on évalue l'expression
-	((SymboleValue*)variable)->setValeur(valeur); // on affecte la variable
+
+	if (((SymboleValue*)variable)->estDefini() && typeid(*valeur) != typeid(*((SymboleValue*)variable)->getValeur())) {
+		cout << "Erreur sémantique" << endl;
+		exit(0);
+	} else {
+		((SymboleValue*)variable)->setValeur(valeur); // on affecte la variable
+	}
 	return valeur; // par convention, une affectation a pour valeur la valeur affectée
 }
 
