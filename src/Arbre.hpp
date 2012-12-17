@@ -138,6 +138,22 @@ private:
 };
 
 
+/* Noeud d'instruction Switch */
+class NoeudInstSwitch : public Noeud {
+public:
+	NoeudInstSwitch(); /* Il y a obligatoirement au moins une instruction conditionelle */
+	~NoeudInstSwitch() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur();	/* Évalue le bon NoeudSi */
+	void afficher(unsigned short indentation = 0);
+
+	void ajouteCase(Noeud* condition, Noeud* seqInst); /* Ajoute une instruction case */
+
+private:
+	vector< pair<Noeud*, Noeud*> > tabSi; // pour stocker les instructions de la séquence
+};
+
+
 /* Boucle repeter : un tantque 'inversé' */
 class NoeudInstRepeter : public Noeud {
 public:

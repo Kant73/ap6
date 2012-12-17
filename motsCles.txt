@@ -29,4 +29,6 @@ ecrire
 lire
 pour
 finpour
-
+switch
+case
+finswitch
