@@ -6,6 +6,8 @@
 
 SymboleValue::SymboleValue(Symbole s) : Symbole(s.getChaine())
 {
+	defini = true;
+
 	if (s == "<ENTIER>")
 		setValeur(new ValeurEntiere(atoi(s.getChaine().c_str())));
 	else if (s == "<CHAINE>")
@@ -22,12 +24,19 @@ void SymboleValue::afficher(unsigned short indentation)
 	Noeud::afficher(indentation);
 
 	cout << "Feuille - Symbole value : ";
-	if (typeid(val) == typeid(ValeurEntiere))
-		cout << ((ValeurEntiere*)val)->getValeur() << endl;
-	else if (typeid(val) == typeid(ValeurReelle))
-		cout << ((ValeurReelle*)val)->getValeur() << endl;
-	else if (typeid(val) == typeid(ValeurChaine))
-		cout << ((ValeurChaine*)val)->getValeur() << endl;
+
+	if (defini) {
+		if (typeid(*val) == typeid(ValeurEntiere))
+			cout << ((ValeurEntiere*)val)->getValeur() << endl;
+		else if (typeid(*val) == typeid(ValeurReelle))
+			cout << ((ValeurReelle*)val)->getValeur() << endl;
+		else if (typeid(*val) == typeid(ValeurChaine))
+			cout << ((ValeurChaine*)val)->getValeur() << endl;
+		else
+			cout << "type non géré" << endl;
+	} else {
+		cout << "Variable '" << this->getChaine() << "'" << endl;
+	}
 }
 
 
@@ -43,8 +52,9 @@ ostream & operator <<(ostream & cout, SymboleValue symb)
 			cout << ((ValeurReelle*)symb.val)->getValeur() << endl;
 		else if (typeid(*symb.val) == typeid(ValeurChaine))
 			cout << ((ValeurChaine*)symb.val)->getValeur() << endl;
-	} else
-		cout << "indefinie ";
+	} else {
+		cout << "indefinie " << endl;
+	}
 
 	return cout;
 }
