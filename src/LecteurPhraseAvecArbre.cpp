@@ -132,11 +132,13 @@ Noeud* LecteurPhraseAvecArbre::instPour()
 Noeud* LecteurPhraseAvecArbre::instRepeter()
 {
 	sauterSymCour("repeter");
-	seqInst();
+	Noeud *seq = seqInst();
 	sauterSymCour("jusqua");
 	sauterSymCour("(");
-	expBool();
+	Noeud *ret = new NoeudInstRepeter(expBool(), seq);
 	sauterSymCour(")");
+
+	return ret;
 }
 
 

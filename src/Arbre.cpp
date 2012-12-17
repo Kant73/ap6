@@ -244,18 +244,39 @@ void NoeudInstSi::afficher(unsigned short indentation)
 }
 
 
-NoeudInstTq::NoeudInstTq(Noeud* exp, Noeud *seqInst)
+NoeudInstRepeter::NoeudInstRepeter(Noeud* exp, Noeud *seqInst)
 {
 	this->exp = exp;
 	this->seqInst = seqInst;
 }
 
+Valeur* NoeudInstRepeter::getValeur()
+{
+	Valeur *valeur = seqInst->getValeur();
+
+	while (((ValeurEntiere*)(exp->getValeur()))->getValeur())
+		valeur = seqInst->getValeur();
+
+	return valeur;
+}
+
+void NoeudInstRepeter::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - Repeter" << endl;
+	exp->afficher(indentation + 1);
+	seqInst->afficher(indentation + 1);
+}
+
+
+NoeudInstTq::NoeudInstTq(Noeud* exp, Noeud *seqInst) : NoeudInstRepeter(exp, seqInst) {}
+
 Valeur* NoeudInstTq::getValeur()
 {
 	Valeur *valeur = NULL;
 
-	while (((ValeurEntiere*)(exp->getValeur()))->getValeur())
-		valeur = seqInst->getValeur();
+	if (((ValeurEntiere*)(exp->getValeur()))->getValeur())
+		valeur = NoeudInstRepeter::getValeur();
 
 	return valeur;
 }
