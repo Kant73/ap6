@@ -1,8 +1,10 @@
 debut
-	si (1 == 0)
-	   ecrire("si");
-	sinonsi (4 < 4)
-	   ecrire("sinonsi");
+	lire(i);
+	ecrire(i);
+	si (i == "1")
+	   ecrire("i = 1");
+	sinonsi (i == "2")
+	   ecrire("i = 2");
 	sinon
 	   ecrire("sinon");
 	finsi;
