@@ -13,6 +13,7 @@ Valeur* NoeudSeqInst::getValeur()
 
 	for (unsigned int i = 0; i < tabInst.size(); i++)
 		valeur = tabInst[i]->getValeur();  // on evalue chaque instruction de la séquence
+
 	return valeur; // par convention, resultat = valeur de la derniere instruction
 }
 
@@ -192,7 +193,51 @@ Valeur* NoeudInstEcrire::getValeur()
 
 void NoeudInstEcrire::afficher(unsigned short indentation)
 {
-	cout << "Noeud - Ecrire" << endl;
 	Noeud::afficher(indentation);
+	cout << "Noeud - Ecrire" << endl;
 	exp->afficher(indentation + 1);   // on affiche exp et expression
+}
+
+
+NoeudInstSi::NoeudInstSi() : tabSi()
+{
+	sinon = NULL;
+}
+
+Valeur* NoeudInstSi::getValeur()
+{
+	Valeur* valeur = NULL;
+
+	for (unsigned int i = 0; i < tabSi.size() && valeur == NULL; i++)
+		if (((ValeurEntiere*)(tabSi[i].first->getValeur()))->getValeur())
+			valeur = tabSi[i].second->getValeur();
+
+	if (valeur == NULL && sinon != NULL)
+		valeur = sinon->getValeur();
+	
+	return valeur;
+}
+
+void NoeudInstSi::ajouteSinonSi(Noeud* condition, Noeud* seqInst)
+{
+	tabSi.push_back(make_pair(condition, seqInst));
+}
+
+void NoeudInstSi::definirSinon(Noeud *seqInst)
+{
+	this->sinon = seqInst;
+}
+
+void NoeudInstSi::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - InstSi" << endl;
+
+	for (unsigned int i = 0; i < tabSi.size(); i++) {
+		tabSi[i].first->afficher(indentation + 1);
+		tabSi[i].second->afficher(indentation + 1);
+	}
+
+	if (sinon != NULL)
+		sinon->afficher(indentation + 1);
 }

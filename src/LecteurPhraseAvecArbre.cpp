@@ -72,26 +72,29 @@ Noeud* LecteurPhraseAvecArbre::inst()
 //<instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 Noeud* LecteurPhraseAvecArbre::instSi()
 {
+	NoeudInstSi *instSi = new NoeudInstSi();
+
 	sauterSymCour("si");
 	sauterSymCour("(");
-	expBool();
+	Noeud *exp = expBool();
 	sauterSymCour(")");
-	seqInst();
+	instSi->ajouteSinonSi(exp, seqInst());
 
 	while (ls.getSymCour() == "sinonsi") {
 		sauterSymCour("sinonsi");
 		sauterSymCour("(");
-		expBool();
+		exp = expBool();
 		sauterSymCour(")");
-		seqInst();
+		instSi->ajouteSinonSi(exp, seqInst());
 	}
 
 	if (ls.getSymCour() == "sinon") {
 		sauterSymCour("sinon");
-		seqInst();
+		instSi->definirSinon(seqInst());
 	}
 
 	sauterSymCour("finsi");
+	return instSi;
 }
 
 

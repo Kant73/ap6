@@ -119,4 +119,24 @@ private:
 	Noeud *exp;
 };
 
+
+/* Permet de gérer une suite d'instructions conditionelles */
+class NoeudInstSi : public Noeud {
+public:
+	NoeudInstSi(); /* Il y a obligatoirement au moins une instruction conditionelle */
+	~NoeudInstSi() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur();	/* Évalue le bon NoeudSi */
+	void afficher(unsigned short indentation = 0);
+
+	void ajouteSinonSi(Noeud* condition, Noeud* seqInst); /* Ajoute une instruction SinonSi */
+	void definirSinon(Noeud *seqInst); /* Ajoute un code a éxécuté si tout les autre ne le sont pas */
+
+private:
+	vector< pair<Noeud*, Noeud*> > tabSi; // pour stocker les instructions de la séquence
+	Noeud *sinon;
+};
+
+
+
 #endif /* ARBRE_H_ */

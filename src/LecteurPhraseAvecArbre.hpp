@@ -30,7 +30,7 @@ private:
 	Noeud*         arbre; // l'arbre abstrait
 
 	Noeud* programme();   //   <programme> ::= debut <seqInst> fin <EOF>
-	Noeud* seqInst();     //     <seq_ins> ::= <inst> ; { <inst> ; }
+	Noeud* seqInst();     //     <seqInst> ::= <inst> ; { <inst> ; }
 	Noeud* inst();	      //        <inst> ::= <affectation> | <instSi> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire>
 	Noeud* instSi();      //      <instSi> ::= si ( <expBool ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 	Noeud* instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
