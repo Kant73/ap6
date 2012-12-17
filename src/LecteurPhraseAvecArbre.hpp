@@ -36,7 +36,7 @@ private:
 	Noeud* instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
 	Noeud* instPour();    //    <instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
 	Noeud* instRepeter(); // <instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
-	Noeud* affectation(); // <affectation> ::= <variable> = <expression>
+	Noeud* affectation(); // <affectation> ::= <variable> = <expression> | <variable>++ | <variable>--
 	Noeud* expression();  //  <expression> ::= <terme> { <opAdd> <terme> }
 	Noeud* terme();       //       <terme> ::= <facteur> { <opMult> facteur> }
 	Noeud* facteur();     //     <facteur> ::= [ <opNegatif> ] <entier> | <chaine> | <variable> | ( <expBool> )

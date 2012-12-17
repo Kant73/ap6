@@ -144,14 +144,34 @@ Noeud* LecteurPhraseAvecArbre::instRepeter()
 }
 
 
-// <affectation> ::= <variable> = <expression>
+// <affectation> ::= <variable> = <expression> | <variable>++ | <variable>--
 Noeud* LecteurPhraseAvecArbre::affectation()
 {
 	testerSymCour("<VARIABLE>");
 	Noeud* var = ts.chercheAjoute(ls.getSymCour());
+	Noeud* exp;
 	ls.suivant();
-	sauterSymCour("=");
-	Noeud* exp = expression();
+	if (ls.getSymCour() == "=")
+	{
+		sauterSymCour("=");
+		exp = expression();
+	}
+	else if (ls.getSymCour() == "+")
+	{
+		sauterSymCour("+");
+		sauterSymCour("+");
+		exp = new NoeudOperateurBinaire(Symbole("+"),var,ts.chercheAjoute(Symbole("1")));
+	}
+	else if (ls.getSymCour() == "-")
+	{
+		sauterSymCour("-");
+		sauterSymCour("-");
+		exp = new NoeudOperateurBinaire(Symbole("-"),var,ts.chercheAjoute(Symbole("1")));
+	}
+	else
+	{
+		exit(0);
+	}
 	return new NoeudAffectation(var, exp);
 }
 
