@@ -70,30 +70,149 @@ NoeudOperateurBinaire::NoeudOperateurBinaire(Symbole operateur,
 Valeur* NoeudOperateurBinaire::getValeur() 
 { 
 	Valeur *valeur = NULL;
-	int og = ((ValeurEntiere*)operandeGauche->getValeur())->getValeur();
-	int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
 
-	if      (this->operateur == "+")   valeur = new ValeurEntiere(og + od); 
-	else if (this->operateur == "-")   valeur = new ValeurEntiere(og - od);
-	else if (this->operateur == "*")   valeur = new ValeurEntiere(og * od); 
-	else if (this->operateur == "et")  valeur = new ValeurEntiere(og && od); 
-	else if (this->operateur == "ou")  valeur = new ValeurEntiere(og || od); 
-	else if (this->operateur == "==")  valeur = new ValeurEntiere(og == od); 
-	else if (this->operateur == "!=")  valeur = new ValeurEntiere(og != od); 
-	else if (this->operateur == "<")   valeur = new ValeurEntiere(og < od); 
-	else if (this->operateur == "<=")  valeur = new ValeurEntiere(og <= od); 
-	else if (this->operateur == ">")   valeur = new ValeurEntiere(og > od); 
-	else if (this->operateur == ">=")  valeur = new ValeurEntiere(og >= od); 
-	else if (this->operateur == "/") {
-		if (od != 0)
-			valeur = new ValeurEntiere(og / od);
-		else {
-			cout << "Erreur pendant l'interpretation : division par zero" << endl;
-			exit(0); // plus tard on levera une exception
+	/* C'est moche car on répète trop le code, TODO */
+	if (typeid(*operandeGauche->getValeur()) == typeid(ValeurEntiere)) {
+		int og = ((ValeurEntiere*)operandeGauche->getValeur())->getValeur();
+
+		if (typeid(*operandeDroit->getValeur()) == typeid(ValeurEntiere)) {
+			int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
+
+			if      (this->operateur == "+")  valeur = new ValeurEntiere(og + od);
+			else if (this->operateur == "-")  valeur = new ValeurEntiere(og - od);
+			else if (this->operateur == "*")  valeur = new ValeurEntiere(og * od);
+			else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
+			else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od);
+			else if (this->operateur == "==") valeur = new ValeurEntiere(og == od);
+			else if (this->operateur == "!=") valeur = new ValeurEntiere(og != od);
+			else if (this->operateur == "<")  valeur = new ValeurEntiere(og < od);
+			else if (this->operateur == "<=") valeur = new ValeurEntiere(og <= od);
+			else if (this->operateur == ">")  valeur = new ValeurEntiere(og > od);
+			else if (this->operateur == ">=") valeur = new ValeurEntiere(og >= od);
+			else if (this->operateur == "/") {
+				if (od != 0)
+					valeur = new ValeurEntiere(og / od);
+				else {
+					cout << "Erreur pendant l'interpretation : division par zero" << endl;
+					exit(0); // plus tard on levera une exception
+				}
+			} else {
+				cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+				exit(0); // plus tard on levera une exception
+			}
+
+		} else if (typeid(*operandeDroit->getValeur()) == typeid(ValeurReelle)) {
+			float od = ((ValeurReelle*)operandeDroit->getValeur())->getValeur();
+
+			if      (this->operateur == "+")  valeur = new ValeurEntiere(og + od);
+			else if (this->operateur == "-")  valeur = new ValeurEntiere(og - od);
+			else if (this->operateur == "*")  valeur = new ValeurEntiere(og * od);
+			else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
+			else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od);
+			else if (this->operateur == "==") valeur = new ValeurEntiere(og == od);
+			else if (this->operateur == "!=") valeur = new ValeurEntiere(og != od);
+			else if (this->operateur == "<")  valeur = new ValeurEntiere(og < od);
+			else if (this->operateur == "<=") valeur = new ValeurEntiere(og <= od);
+			else if (this->operateur == ">")  valeur = new ValeurEntiere(og > od);
+			else if (this->operateur == ">=") valeur = new ValeurEntiere(og >= od);
+			else if (this->operateur == "/") {
+				if (od != 0)
+					valeur = new ValeurEntiere(og / od);
+				else {
+					cout << "Erreur pendant l'interpretation : division par zero" << endl;
+					exit(0); // plus tard on levera une exception
+				}
+			} else {
+				cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+				exit(0); // plus tard on levera une exception
+			}
+
+		} else {
+			cout << "Erreur de sémantique";
+			exit(0);
 		}
-	} else {
-		cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
-		exit(0); // plus tard on levera une exception
+	} else if (typeid(*operandeGauche->getValeur()) == typeid(ValeurReelle)) {
+		float og = ((ValeurReelle*)operandeGauche->getValeur())->getValeur();
+
+		if (typeid(*operandeDroit->getValeur()) == typeid(ValeurEntiere)) {
+			int od = ((ValeurEntiere*)operandeDroit->getValeur())->getValeur();
+
+			if      (this->operateur == "+")  valeur = new ValeurEntiere(og + od);
+			else if (this->operateur == "-")  valeur = new ValeurEntiere(og - od);
+			else if (this->operateur == "*")  valeur = new ValeurEntiere(og * od);
+			else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
+			else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od);
+			else if (this->operateur == "==") valeur = new ValeurEntiere(og == od);
+			else if (this->operateur == "!=") valeur = new ValeurEntiere(og != od);
+			else if (this->operateur == "<")  valeur = new ValeurEntiere(og < od);
+			else if (this->operateur == "<=") valeur = new ValeurEntiere(og <= od);
+			else if (this->operateur == ">")  valeur = new ValeurEntiere(og > od);
+			else if (this->operateur == ">=") valeur = new ValeurEntiere(og >= od);
+			else if (this->operateur == "/") {
+				if (od != 0)
+					valeur = new ValeurEntiere(og / od);
+				else {
+					cout << "Erreur pendant l'interpretation : division par zero" << endl;
+					exit(0); // plus tard on levera une exception
+				}
+			} else {
+				cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+				exit(0); // plus tard on levera une exception
+			}
+
+		} else if (typeid(*operandeDroit->getValeur()) == typeid(ValeurReelle)) {
+			float od = ((ValeurReelle*)operandeDroit->getValeur())->getValeur();
+
+			if      (this->operateur == "+")  valeur = new ValeurEntiere(og + od);
+			else if (this->operateur == "-")  valeur = new ValeurEntiere(og - od);
+			else if (this->operateur == "*")  valeur = new ValeurEntiere(og * od);
+			else if (this->operateur == "et") valeur = new ValeurEntiere(og && od);
+			else if (this->operateur == "ou") valeur = new ValeurEntiere(og || od);
+			else if (this->operateur == "==") valeur = new ValeurEntiere(og == od);
+			else if (this->operateur == "!=") valeur = new ValeurEntiere(og != od);
+			else if (this->operateur == "<")  valeur = new ValeurEntiere(og < od);
+			else if (this->operateur == "<=") valeur = new ValeurEntiere(og <= od);
+			else if (this->operateur == ">")  valeur = new ValeurEntiere(og > od);
+			else if (this->operateur == ">=") valeur = new ValeurEntiere(og >= od);
+			else if (this->operateur == "/") {
+				if (od != 0)
+					valeur = new ValeurEntiere(og / od);
+				else {
+					cout << "Erreur pendant l'interpretation : division par zero" << endl;
+					exit(0); // plus tard on levera une exception
+				}
+			} else {
+				cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+				exit(0); // plus tard on levera une exception
+			}
+
+		} else {
+			cout << "Erreur de sémantique";
+			exit(0);
+		}
+	} else if (typeid(*operandeGauche->getValeur()) == typeid(ValeurChaine)) {
+		if (typeid(*operandeDroit->getValeur()) == typeid(ValeurChaine)) {
+			string og = ((ValeurChaine*)operandeGauche->getValeur())->getValeur();
+			string od = ((ValeurChaine*)operandeDroit->getValeur())->getValeur();
+
+			// Un '+' entre 2 chaines les concatènent
+			if      (this->operateur == "+")  valeur = new ValeurChaine(og + od);
+			else if (this->operateur == "et") valeur = new ValeurEntiere(og.length() && od.length());
+			else if (this->operateur == "ou") valeur = new ValeurEntiere(og.length() || od.length());
+			else if (this->operateur == "==") valeur = new ValeurEntiere(og == od);
+			else if (this->operateur == "!=") valeur = new ValeurEntiere(og != od);
+			else if (this->operateur == "<")  valeur = new ValeurEntiere(og < od);
+			else if (this->operateur == "<=") valeur = new ValeurEntiere(og <= od);
+			else if (this->operateur == ">")  valeur = new ValeurEntiere(og > od);
+			else if (this->operateur == ">=") valeur = new ValeurEntiere(og >= od);
+			else {
+				cout << "Opérateur binaire indéfinit : " << this->operateur << endl;
+				exit(0); // plus tard on levera une exception
+			}
+		} else {
+			cout << "Erreur de sémantique";
+			exit(0);
+		}
 	}
 
 	return valeur;
@@ -153,7 +272,7 @@ Valeur* NoeudInstLire::getValeur()
 
 	cin >> str;
 	
-	valeur = new ValeurChaine(str);
+	valeur = new ValeurChaine('"' + str + '"');
 	((SymboleValue*)variable)->setValeur(valeur);
 
 	return valeur;
