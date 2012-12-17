@@ -1,0 +1,3 @@
+debut
+	i = "Chaine de caractère !";
+fin
