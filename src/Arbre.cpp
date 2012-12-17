@@ -184,7 +184,8 @@ Valeur* NoeudInstEcrire::getValeur()
 		cout << ((ValeurReelle*)val)->getValeur() << endl;
 		return ((ValeurReelle*)val);
 	} else if (typeid(*val) == typeid(ValeurChaine)) {
-		cout << ((ValeurChaine*)val)->getValeur() << endl;
+		string s = ((ValeurChaine*)val)->getValeur();
+		cout << s.substr(1, s.length() - 2) << endl;
 		return ((ValeurChaine*)val);
 	}
 
