@@ -4,4 +4,10 @@ debut
 		  i = i + 1;
 		  ecrire(i);
 	fintantque;
+
+	j = 2;
+	repeter
+		j = j + 1;
+		ecrire(j);
+	jusqua (j < 4);
 fin
