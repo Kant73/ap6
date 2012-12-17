@@ -107,16 +107,24 @@ Noeud* LecteurPhraseAvecArbre::instSwitch()
 	Noeud* exp;
 	sauterSymCour("switch");
 	sauterSymCour("(");
-	Noeud* var = ts.chercheAjoute(ls.getSymCour());
-	ls.suivant();
+	Noeud *var = expression();
 	sauterSymCour(")");
 	while(ls.getSymCour() == "case")
 	{
 		sauterSymCour("case");
-		exp = new NoeudOperateurBinaire(Symbole("=="),var,ts.chercheAjoute(ls.getSymCour()));
-		ls.suivant();
-		sauterSymCour(":");
-		instSwitch->ajouteCase(exp, seqInst());
+		if (ls.getSymCour() == "default")
+		{
+			sauterSymCour("default");
+			sauterSymCour(":");
+			instSwitch->definirDefaut(seqInst());
+		}
+		else
+		{
+			exp = new NoeudOperateurBinaire(Symbole("=="),var,ts.chercheAjoute(ls.getSymCour()));
+			ls.suivant();
+			sauterSymCour(":");
+			instSwitch->ajouteCase(exp, seqInst());
+		}
 	}
 	sauterSymCour("finswitch");
 	return instSwitch;

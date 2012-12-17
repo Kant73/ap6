@@ -256,6 +256,9 @@ Valeur* NoeudInstSwitch::getValeur()
 	for (unsigned int i = 0; i < tabSi.size() && valeur == NULL; i++)
 		if (((ValeurEntiere*)(tabSi[i].first->getValeur()))->getValeur())
 			valeur = tabSi[i].second->getValeur();
+
+	if (valeur == NULL && defaut != NULL)
+		valeur = defaut->getValeur();
 	
 	return valeur;
 }
@@ -263,6 +266,11 @@ Valeur* NoeudInstSwitch::getValeur()
 void NoeudInstSwitch::ajouteCase(Noeud* condition, Noeud* seqInst)
 {
 	tabSi.push_back(make_pair(condition, seqInst));
+}
+
+void NoeudInstSwitch::definirDefaut(Noeud *seqInst)
+{
+	this->defaut = seqInst;
 }
 
 void NoeudInstSwitch::afficher(unsigned short indentation)
@@ -274,6 +282,9 @@ void NoeudInstSwitch::afficher(unsigned short indentation)
 		tabSi[i].first->afficher(indentation + 1);
 		tabSi[i].second->afficher(indentation + 1);
 	}
+
+	if (defaut != NULL)
+		defaut->afficher(indentation + 1);
 }
 
 
