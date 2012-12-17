@@ -162,4 +162,18 @@ public:
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
 };
 
+
+/* Boucle 'pour', hérite de 'tantque' pour simplifier le code */
+class NoeudInstPour : public NoeudInstTq {
+public:
+	NoeudInstPour(Noeud *init, Noeud *exp, Noeud* aff, Noeud *seqInst); // construit une affectation
+	~NoeudInstPour() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
+	void afficher(unsigned short indentation = 0); // affiche l'affectation
+
+private:
+	Noeud *init, *aff;
+};
+
 #endif /* ARBRE_H_ */

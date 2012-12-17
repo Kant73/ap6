@@ -117,14 +117,16 @@ Noeud* LecteurPhraseAvecArbre::instPour()
 {
 	sauterSymCour("pour");
 	sauterSymCour("(");
-	affectation();
+	Noeud *init = affectation();
 	sauterSymCour(";");
-	expBool();
+	Noeud *exp = expBool();
 	sauterSymCour(";");
-	affectation();
+	Noeud *aff = affectation();
 	sauterSymCour(")");
-	seqInst();
+	Noeud *ret = new NoeudInstPour(init, exp, aff, seqInst());
 	sauterSymCour("finpour");
+
+	return ret;
 }
 
 

@@ -288,3 +288,32 @@ void NoeudInstTq::afficher(unsigned short indentation)
 	exp->afficher(indentation + 1);
 	seqInst->afficher(indentation + 1);
 }
+
+
+NoeudInstPour::NoeudInstPour(Noeud *init, Noeud* exp, Noeud* aff, Noeud *seqInst) : NoeudInstTq(exp, seqInst)
+{
+	this->init = init;
+	this->aff = aff;
+}
+
+Valeur* NoeudInstPour::getValeur()
+{
+	Valeur *valeur = init->getValeur();
+
+	while (((ValeurEntiere*)(exp->getValeur()))->getValeur()) {
+		valeur = seqInst->getValeur();
+		aff->getValeur();
+	}
+
+	return valeur;
+}
+
+void NoeudInstPour::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - Pour" << endl;
+	init->afficher(indentation + 1);
+	exp->afficher(indentation + 1);
+	aff->afficher(indentation + 1);
+	seqInst->afficher(indentation + 1);
+}
