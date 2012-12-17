@@ -138,5 +138,18 @@ private:
 };
 
 
+/* Boucle primitive */
+class NoeudInstTq : public Noeud {
+public:
+	NoeudInstTq(Noeud* exp, Noeud *seqInst); // construit une affectation
+	~NoeudInstTq() {} // à cause du destructeur virtuel de la classe Noeud
+
+	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
+	void afficher(unsigned short indentation = 0); // affiche l'affectation
+
+private:
+	Noeud *exp, *seqInst;
+};
+
 
 #endif /* ARBRE_H_ */

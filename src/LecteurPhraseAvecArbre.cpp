@@ -103,10 +103,12 @@ Noeud* LecteurPhraseAvecArbre::instTq()
 {
 	sauterSymCour("tantque");
 	sauterSymCour("(");
-	expBool();
+	Noeud *exp = expBool();
 	sauterSymCour(")");
-	seqInst();
+	Noeud *ret = new NoeudInstTq(exp, seqInst());
 	sauterSymCour("fintantque");
+
+	return ret;
 }
 
 

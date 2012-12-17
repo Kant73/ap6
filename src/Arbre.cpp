@@ -242,3 +242,28 @@ void NoeudInstSi::afficher(unsigned short indentation)
 	if (sinon != NULL)
 		sinon->afficher(indentation + 1);
 }
+
+
+NoeudInstTq::NoeudInstTq(Noeud* exp, Noeud *seqInst)
+{
+	this->exp = exp;
+	this->seqInst = seqInst;
+}
+
+Valeur* NoeudInstTq::getValeur()
+{
+	Valeur *valeur = NULL;
+
+	while (((ValeurEntiere*)(exp->getValeur()))->getValeur())
+		valeur = seqInst->getValeur();
+
+	return valeur;
+}
+
+void NoeudInstTq::afficher(unsigned short indentation)
+{
+	Noeud::afficher(indentation);
+	cout << "Noeud - Tant que" << endl;
+	exp->afficher(indentation + 1);
+	seqInst->afficher(indentation + 1);
+}
