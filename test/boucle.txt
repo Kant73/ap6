@@ -10,4 +10,8 @@ debut
 		j = j + 1;
 		ecrire(j);
 	jusqua (j < 4);
+
+	pour (k = 1; k <= 10; k = k + 2)
+	     ecrire(k);
+	finpour;
 fin
