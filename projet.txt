@@ -5,6 +5,7 @@ Comment nous avons personnalisé le projet :
   - Les opérations d'affichage (et de traductions) sont dans un nouveau fichier appellé 'src/ArbreAfficher.cpp'
   - Affectation de variable par lecture : nous ne lisons que des chaines pour rester cohérent et éviter les problème de vérification sémantique
   - Les valeurs sont une classe Valeur que l'ont transforme en ValeurEntiere, ValeurChaine (...) grace au typeid, comme vu en cours
+  - Ajout d'un système de compilation personalisé qui gère automatiquement les dépendance (voir conf.mk et Makefile)
 
 Extensions :
   - Ajout des instructions switch, ++ et --
