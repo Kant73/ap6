@@ -6,8 +6,14 @@ Comment nous avons personnalisé le projet :
   - Affectation de variable par lecture : nous ne lisons que des chaines pour rester cohérent et éviter les problème de vérification sémantique
   - Les valeurs sont une classe Valeur que l'ont transforme en ValeurEntiere, ValeurChaine (...) grace au typeid, comme vu en cours
 
+Extensions :
+  - Ajout des instructions switch, ++ et --
+  - Ajout d'un générateur de code C (non terminé)
+  - Vérification de la sémantique avant évaluation
+
 Problèmes rencontrés :
   - La traduction en C n'est pas complète car le type des variables n'est connu qu'à l'éxécution, alors que l'on aurait put faire autrement
+  - Les typeid ne sont pas évident à géré, de plus qu'il induisent une grosse copie de code pour le NoeudOperateurBinaire
   - Mauvaise gestion du temps restant
 
 La grammaire est dans le fichier 'grammaire.txt'.
