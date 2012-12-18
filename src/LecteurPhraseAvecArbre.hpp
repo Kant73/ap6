@@ -31,7 +31,7 @@ private:
 
 	Noeud* programme();   //   <programme> ::= debut <seqInst> fin <EOF>
 	Noeud* seqInst();     //     <seqInst> ::= <inst> ; { <inst> ; }
-	Noeud* inst();	      //        <inst> ::= <affectation> | <instSi> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire>
+	Noeud* inst();	      //        <inst> ::= <affectation> | <instSi> | <instSwitch> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire> | <instEcrire>
 	Noeud* instSi();      //      <instSi> ::= si ( <expBool> ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
 	Noeud* instSwitch();  //  <instSwitch> ::= switch ( <variable> ) { case <expression>: <seqInst> break; } finswitch
 	Noeud* instTq();      //      <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
