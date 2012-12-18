@@ -1,0 +1,15 @@
+debut
+	i = 2;
+	switch(i)
+		case 0:
+			ecrire("0");
+		case 1:
+			ecrire("1");
+		case 2:
+			ecrire("2");
+		case 3:
+			ecrire("3");
+		case default:
+			ecrire("DEFAULT");
+	finswitch;
+fin
