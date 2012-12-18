@@ -1,3 +1,11 @@
+Comment nous avons personnalisé le projet :
+-Bonne identation du code
+
+
+
+
+
+Grammaire :
   <programme> ::= { <commentaire> } debut { <commentaire> } <seqInst> { <commentaire> } fin { <commentaire> } <FINDEFICHIER>
     <seqInst> ::= <inst> ; { <commentaire> } { <inst> ; }
        <inst> ::= <affectation> | <instSi> | <instSwitch> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire> | <instEcrire>
@@ -29,3 +37,10 @@
 <commentaire> ::= # { <caractère> } <FinDeLigne>
     <chiffre> ::= 0 | 1 | 2 | ... | 9
      <lettre> ::= A | a | B | b |... Z | z
+
+
+
+
+
+Problèmes rencontrés :
+-Affectation de variable par lecture : nous n'avons pas réussi à lire autre chose que des chaînes
