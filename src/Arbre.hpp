@@ -148,9 +148,11 @@ public:
 	void afficher(unsigned short indentation = 0);
 
 	void ajouteCase(Noeud* condition, Noeud* seqInst); /* Ajoute une instruction case */
+	void definirDefaut(Noeud *seqInst); /* Ajoute un code a éxécuté si tout les autre ne le sont pas */
 
 private:
 	vector< pair<Noeud*, Noeud*> > tabSi; // pour stocker les instructions de la séquence
+	Noeud* defaut;
 };
 
 
