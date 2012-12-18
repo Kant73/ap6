@@ -1,46 +1,13 @@
 Comment nous avons personnalisé le projet :
--Bonne identation du code
-
-
-
-
-
-Grammaire :
-  <programme> ::= { <commentaire> } debut { <commentaire> } <seqInst> { <commentaire> } fin { <commentaire> } <FINDEFICHIER>
-    <seqInst> ::= <inst> ; { <commentaire> } { <inst> ; }
-       <inst> ::= <affectation> | <instSi> | <instSwitch> | <instTq> | <instPour> | <instRepeter> | <instLire> | <instEcrire> | <instEcrire>
-     <instSi> ::= si ( <expBool> ) <seqInst> { sinonsi ( <expBool> ) <seqInst> } [ sinon <seqInst> ] finsi
- <instSwitch> ::= switch ( <variable> ) { case <expression>: <seqInst> break; } finswitch
-     <instTq> ::= tantque ( <expBool> ) <seqInst> fintantque
-   <instPour> ::= pour ( <affectation> ; <expBool> ; <affectation> ) <seqInst> finpour
-<instRepeter> ::= repeter <seqInst> jusqua ( <expBool> )
-<affectation> ::= <variable> = <expression> | <variable>++ | <variable>--
- <expression> ::= <terme> { <opAdd> <terme> }
-      <terme> ::= <facteur> { <opMult> facteur> }
-    <facteur> ::= [ <opNegatif> ] <entier> | <chaine> | <variable> | ( <expBool> )
-      <opAdd> ::= + | -
-     <opMult> ::= * | /
-  <opNegatif> ::= -
-    <expBool> ::= <expBoolEt> { <opBoolOu> <expBoolEt> }
-  <expBoolEt> ::= <expBoolNon> { <opBoolEt> <expBoolNon> }
- <expBoolNon> ::= [ <opBoolNon> ] <relation>
-   <opBoolOu> ::= ou
-   <opBoolEt> ::= et
-  <opBoolNon> ::= non
-   <relation> ::= <expression> { <opRel> <expression> }
-      <opRel> ::= == | != | < | <= | > | >= 
-   <instLire> ::= lire ( <variable> )
- <instEcrire> ::= ecrire ( <expression> | <chaine> )
-     <entier> ::= <chiffre> { <chiffre> }
-   <variable> ::= <lettre> { <lettre> | <chiffre> | _ }
-     <chaine> ::= " { <caractère> } "
-<commentaire> ::= # { <caractère> } <FinDeLigne>
-    <chiffre> ::= 0 | 1 | 2 | ... | 9
-     <lettre> ::= A | a | B | b |... Z | z
-
-
-
-
+  - Nous avons modifié le style de codage,
+  - Les Nombres négatif sont des nombres positif auquels ont applique une opération '-',
+  - Seul l'opération 'non' peut être utilisée sur les expressions booleennes,
+  - Les opérations d'affichage (et de traductions) sont dans un nouveau fichier appellé 'src/ArbreAfficher.cpp'
+  - Affectation de variable par lecture : nous ne lisons que des chaines pour rester cohérent et éviter les problème de vérification sémantique
+  - Les valeurs sont une classe Valeur que l'ont transforme en ValeurEntiere, ValeurChaine (...) grace au typeid, comme vu en cours
 
 Problèmes rencontrés :
--Affectation de variable par lecture : nous n'avons pas réussi à lire autre chose que des chaînes
+  - La traduction en C n'est pas complète car le type des variables n'est connu qu'à l'éxécution, alors que l'on aurait put faire autrement
+  - Mauvaise gestion du temps restant
+
+La grammaire est dans le fichier 'grammaire.txt'.
