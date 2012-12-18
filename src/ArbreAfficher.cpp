@@ -86,7 +86,7 @@ void NoeudInstLire::afficher(unsigned short indentation)
 void NoeudInstLire::afficherC(unsigned short indentation)
 {
 	Noeud::afficher(indentation);
-	cout << "scanf(\"%d\",";
+	cout << "scanf(\"%s\",";
 	variable->afficherC();
 	cout << ");";
 }
@@ -102,30 +102,10 @@ void NoeudInstEcrire::afficher(unsigned short indentation)
 
 void NoeudInstEcrire::afficherC(unsigned short indentation)
 {
-	if (!((SymboleValue*)exp)->estDefini())
-	{
-		Noeud::afficher(indentation);
-		Valeur *val = ((SymboleValue*)exp)->getValeur();
-		if (typeid(*val) == typeid(ValeurEntiere))
-			cout << "printf(\"%d\",";
-		else if (typeid(*val) == typeid(ValeurReelle))
-			cout << "printf(\"%f\",";
-		else if (typeid(*val) == typeid(ValeurChaine))
-			cout << "printf(\"%s\",";
-		exp->afficherC();
-		cout << ");";
-	}
-	else
-	{
-		Noeud::afficher(indentation);
-		cout << "int ";
-		exp->afficherC();
-		cout << " = 0;" << endl;
-		Noeud::afficher(indentation);
-		cout << "printf(\"%d\",";
-		exp->afficherC();
-		cout << ");";
-	}
+	Noeud::afficher(indentation);
+	cout << "printf(\"%s\",";
+	exp->afficherC();
+	cout << ");";
 }
 
 

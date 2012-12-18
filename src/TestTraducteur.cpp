@@ -17,10 +17,10 @@ int main(int argc, char* argv[])
 	LecteurPhraseAvecArbre lp(nomFich);
 
 	lp.analyse();
-	cout << endl << "Code C : " << endl;
-	cout         << "================"  << endl << endl << "#include <stdlib>.h" << endl << "#include <stdio.h>" << endl << endl;
+	cout << endl << "Code C :" << endl;
+	cout         << "========"  << endl << endl << "#include <stdlib>.h" << endl << "#include <stdio.h>" << endl << endl << "int main ()" << endl << "{" << endl;
 	lp.getArbre()->afficherC();
-
+	cout << "}" << endl << endl;
 	return 0;
 }
 
