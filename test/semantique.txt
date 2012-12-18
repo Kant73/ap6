@@ -1,0 +1,4 @@
+debut
+	i = 1;
+	i = "lol";
+fin
