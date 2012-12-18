@@ -40,6 +40,23 @@ void SymboleValue::afficher(unsigned short indentation)
 }
 
 
+void SymboleValue::afficherC(unsigned short indentation)
+{
+	if (defini) {
+		if (typeid(*val) == typeid(ValeurEntiere))
+			cout << ((ValeurEntiere*)val)->getValeur();
+		else if (typeid(*val) == typeid(ValeurReelle))
+			cout << ((ValeurReelle*)val)->getValeur();
+		else if (typeid(*val) == typeid(ValeurChaine))
+			cout << ((ValeurChaine*)val)->getValeur();
+		else
+			cout << "type non géré" << endl;
+	} else {
+		cout << this->getChaine();
+	}
+}
+
+
 // Attention : cette fonction (operator) n'est pas membre de la classe SymboleValue
 ostream & operator <<(ostream & cout, SymboleValue symb)
 {

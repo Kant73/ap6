@@ -17,6 +17,7 @@ public:
 	~SymboleValue() {}
 	
 	void    afficher (unsigned short indentation = 0); // affiche le symbole en tant que noeud de l'arbre
+	void	afficherC(unsigned short indentation = 0);
 	Valeur* getValeur() { return val; }
 	
 	void setValeur(Valeur *val)

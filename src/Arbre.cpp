@@ -18,15 +18,6 @@ Valeur* NoeudSeqInst::getValeur()
 }
 
 
-void NoeudSeqInst::afficher(unsigned short indentation) 
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Sequence de " << tabInst.size() << " instruction(s)" << endl;
-	for (unsigned int i = 0; i < tabInst.size(); i++)
-		tabInst[i]->afficher(indentation + 1); // on affiche les fils en augmentant l'indentation
-}
-
-
 void NoeudSeqInst::ajouteInstruction(Noeud* instruction) 
 {
 	tabInst.push_back(instruction);
@@ -45,15 +36,6 @@ Valeur* NoeudAffectation::getValeur()
 	Valeur *valeur = expression->getValeur(); // on évalue l'expression
 	((SymboleValue*)variable)->setValeur(valeur); // on affecte la variable
 	return valeur; // par convention, une affectation a pour valeur la valeur affectée
-}
-
-
-void NoeudAffectation::afficher(unsigned short indentation) 
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Affectation" << endl;
-	variable->afficher(indentation + 1);   // on affiche variable et expression
-	expression->afficher(indentation + 1); // en augmentant l'indentation
 }
 
 
@@ -100,15 +82,6 @@ Valeur* NoeudOperateurBinaire::getValeur()
 }
 
 
-void NoeudOperateurBinaire::afficher(unsigned short indentation) 
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Operateur Binaire \"" << this->operateur.getChaine() << "\" applique a : " << endl;
-	operandeGauche->afficher(indentation + 1);  // on affiche fils gauche et fils droit
-	operandeDroit->afficher(indentation + 1);   // en augmentant l'indentation
-}
-
-
 NoeudOperateurUnaire::NoeudOperateurUnaire(Symbole operateur, Noeud* operande) 
 {
 	this->operateur = operateur;
@@ -132,14 +105,6 @@ Valeur* NoeudOperateurUnaire::getValeur()
 }
 
 
-void NoeudOperateurUnaire::afficher(unsigned short indentation) 
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Operateur Unaire \"" << this->operateur.getChaine() << "\" applique a : " << endl;
-	operande->afficher(indentation + 1);
-}
-
-
 NoeudInstLire::NoeudInstLire(Noeud* variable)
 {
 	this->variable = variable;
@@ -157,13 +122,6 @@ Valeur* NoeudInstLire::getValeur()
 	((SymboleValue*)variable)->setValeur(valeur);
 
 	return valeur;
-}
-
-void NoeudInstLire::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Lire" << endl;
-	variable->afficher(indentation + 1);   // on affiche variable et expression
 }
 
 
@@ -190,13 +148,6 @@ Valeur* NoeudInstEcrire::getValeur()
 	}
 
 	return NULL;
-}
-
-void NoeudInstEcrire::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Ecrire" << endl;
-	exp->afficher(indentation + 1);   // on affiche exp et expression
 }
 
 
@@ -229,20 +180,6 @@ void NoeudInstSi::definirSinon(Noeud *seqInst)
 	this->sinon = seqInst;
 }
 
-void NoeudInstSi::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - InstSi" << endl;
-
-	for (unsigned int i = 0; i < tabSi.size(); i++) {
-		tabSi[i].first->afficher(indentation + 1);
-		tabSi[i].second->afficher(indentation + 1);
-	}
-
-	if (sinon != NULL)
-		sinon->afficher(indentation + 1);
-}
-
 
 NoeudInstSwitch::NoeudInstSwitch() : tabSi()
 {
@@ -273,20 +210,6 @@ void NoeudInstSwitch::definirDefaut(Noeud *seqInst)
 	this->defaut = seqInst;
 }
 
-void NoeudInstSwitch::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - InstSwitch" << endl;
-
-	for (unsigned int i = 0; i < tabSi.size(); i++) {
-		tabSi[i].first->afficher(indentation + 1);
-		tabSi[i].second->afficher(indentation + 1);
-	}
-
-	if (defaut != NULL)
-		defaut->afficher(indentation + 1);
-}
-
 
 NoeudInstRepeter::NoeudInstRepeter(Noeud* exp, Noeud *seqInst)
 {
@@ -304,14 +227,6 @@ Valeur* NoeudInstRepeter::getValeur()
 	return valeur;
 }
 
-void NoeudInstRepeter::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Repeter" << endl;
-	exp->afficher(indentation + 1);
-	seqInst->afficher(indentation + 1);
-}
-
 
 NoeudInstTq::NoeudInstTq(Noeud* exp, Noeud *seqInst) : NoeudInstRepeter(exp, seqInst) {}
 
@@ -323,14 +238,6 @@ Valeur* NoeudInstTq::getValeur()
 		valeur = NoeudInstRepeter::getValeur();
 
 	return valeur;
-}
-
-void NoeudInstTq::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Tant que" << endl;
-	exp->afficher(indentation + 1);
-	seqInst->afficher(indentation + 1);
 }
 
 
@@ -350,14 +257,4 @@ Valeur* NoeudInstPour::getValeur()
 	}
 
 	return valeur;
-}
-
-void NoeudInstPour::afficher(unsigned short indentation)
-{
-	Noeud::afficher(indentation);
-	cout << "Noeud - Pour" << endl;
-	init->afficher(indentation + 1);
-	exp->afficher(indentation + 1);
-	aff->afficher(indentation + 1);
-	seqInst->afficher(indentation + 1);
 }

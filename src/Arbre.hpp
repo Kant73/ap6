@@ -22,6 +22,9 @@ public:
 		cout << setw(4 * indentation) << " ";
 	}
 	// pour afficher un noeud avec un décalage (indentation) proportionnel à son niveau dans l'arbre
+	virtual void afficherC(unsigned short indentation = 0) {
+		cout << setw(4*indentation) << " ";
+	}
 
 	virtual ~Noeud() {} // présence d'un destructeur virtuel conseillée dans les classes abstraites
 };
@@ -36,6 +39,7 @@ public:
 
 	Valeur* getValeur(); // évalue chaque instruction de la séquence
 	void afficher(unsigned short indentation=0); // affiche la séquence d'instructions
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 	void ajouteInstruction(Noeud* instruction);  // ajoute une instruction à la séquence
 
 private:
@@ -52,6 +56,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 private:
 	Noeud* variable;
@@ -69,6 +74,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur
 	void afficher(unsigned short indentation = 0); // affiche l'opération
+	void afficherC(); // affiche le code en C
 
 private:
 	Symbole operateur;
@@ -85,6 +91,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'operande gauche, l'operande droit et applique l'opérateur
 	void afficher(unsigned short indentation = 0); // affiche l'opération
+	void afficherC(); // affiche le code en C
 
 private:
 	Symbole operateur;
@@ -100,6 +107,7 @@ public:
 
 	Valeur* getValeur();
 	void afficher(unsigned short indentation = 0);
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 private:
 	Noeud *variable;
@@ -114,6 +122,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 private:
 	Noeud *exp;
@@ -128,6 +137,7 @@ public:
 
 	Valeur* getValeur();	/* Évalue le bon NoeudSi */
 	void afficher(unsigned short indentation = 0);
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 	void ajouteSinonSi(Noeud* condition, Noeud* seqInst); /* Ajoute une instruction SinonSi */
 	void definirSinon(Noeud *seqInst); /* Ajoute un code a éxécuté si tout les autre ne le sont pas */
@@ -146,6 +156,7 @@ public:
 
 	Valeur* getValeur();	/* Évalue le bon NoeudSi */
 	void afficher(unsigned short indentation = 0);
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 	void ajouteCase(Noeud* condition, Noeud* seqInst); /* Ajoute une instruction case */
 	void definirDefaut(Noeud *seqInst); /* Ajoute un code a éxécuté si tout les autre ne le sont pas */
@@ -164,6 +175,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 protected:
 	Noeud *exp, *seqInst;
@@ -178,6 +190,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 };
 
 
@@ -189,6 +202,7 @@ public:
 
 	Valeur* getValeur(); // évalue l'expression et affecte sa valeur à la variable
 	void afficher(unsigned short indentation = 0); // affiche l'affectation
+	void afficherC(unsigned short indentation = 0); // affiche le code en C
 
 private:
 	Noeud *init, *aff;
